@@ -1,0 +1,93 @@
+server:
+  port: 40000
+  servlet:
+    context-path: /order
+    session:
+      timeout: 2000s
+
+nacos:
+  config:
+    server-addr: 47.111.254.203:8848
+    namespace: 2886a508-8bd6-4c3b-928f-8f3e6248f915
+
+spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time: GMT+8
+  application:
+    name: demo-order
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      url: jdbc:mysql://47.111.254.203:3306/demo_order?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true
+      username: demo
+      password: c0!&saoN9z1uuGKl
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      # 初始化大小，最小，最大
+      initialSize: 5
+      # 配置获取连接等待超时的时间
+      maxWait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      timeBetweenEvictionRunsMillis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      # 打开PSCache，并且指定每个连接上PSCache的大小
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+      # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 47.111.244.5:8848
+        namespace: 82632dc2-fce3-4288-b49e-9d270643df74
+  redis:
+    database: 6
+    host: 47.111.254.203
+    port: 6379
+    password: 2g9cvi7xcJbDdshO
+  redission-lock:
+    enable: true
+
+
+seata:
+  enabled: true
+  tx-service-group: my_test_tx_group
+  enable-auto-data-source-proxy: true
+  application-id: ${spring.application.name}
+  config:
+    type: nacos
+    nacos:
+      group: SEATA_GROUP
+      server-addr: 47.111.244.5:8848
+      namespace: 82632dc2-fce3-4288-b49e-9d270643df74
+  registry:
+    type: nacos
+    nacos:
+      cluster: default
+      server-addr: 47.111.244.5:8848
+      namespace: 82632dc2-fce3-4288-b49e-9d270643df74
+
+mybatis:
+  typeAliasesPackage: cn.demoorigin.order.model.entity
+  mapperLocations: classpath:/mapper/**/*.xml
+
+# 分页插件
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+swagger:
+  enabled: false
+  base-path: /**
+  base-package: 'cn.demoorigin.micro.market.frontend'
+  title: '行情API'
+  description: '基于Swagger构建的SpringBoot RESTApi 文档'
+  version: '1.0.0'
+  swagger.contact.email: 'cuijianlong@demoorigin.cn'

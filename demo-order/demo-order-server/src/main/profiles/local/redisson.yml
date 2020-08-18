@@ -1,0 +1,24 @@
+singleServerConfig:
+  database: 0
+  password: 2g9cvi7xcJbDdshO
+  address: "redis://47.111.254.203:6379"
+  idleConnectionTimeout: 10000
+  pingTimeout: 1000
+  connectTimeout: 10000
+  timeout: 3000
+  retryAttempts: 3
+  retryInterval: 1500
+  reconnectionTimeout: 3000
+  failedAttempts: 3
+  subscriptionsPerConnection: 5
+  clientName: null
+  subscriptionConnectionMinimumIdleSize: 1
+  subscriptionConnectionPoolSize: 50
+  connectionMinimumIdleSize: 10
+  connectionPoolSize: 64
+  dnsMonitoring: false
+  dnsMonitoringInterval: 5000
+threads: 0
+nettyThreads: 0
+codec: !<org.redisson.codec.FstCodec> {}
+useLinuxNativeEpoll: false

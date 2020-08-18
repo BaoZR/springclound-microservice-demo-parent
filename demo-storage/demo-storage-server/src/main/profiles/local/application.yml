@@ -1,0 +1,109 @@
+server:
+  port: 40001
+spring:
+  main:
+    #支持名称相同的bean被覆盖
+    allow-bean-definition-overriding: true
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time: GMT+8
+  application:
+    name: demo-storage
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      url: jdbc:mysql://47.111.254.203:3306/demo_storage?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true
+      username: demo
+      password: c0!&saoN9z1uuGKl
+      max-active: 20
+      min-idle: 2
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      # 初始化大小，最小，最大
+      initialSize: 5
+      # 配置获取连接等待超时的时间
+      maxWait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      timeBetweenEvictionRunsMillis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      # 打开PSCache，并且指定每个连接上PSCache的大小
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+      # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+  servlet:
+    multipart:
+      max-file-size: 1001MB
+      max-request-size: 100MB
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 47.111.244.5:8848
+        namespace: 82632dc2-fce3-4288-b49e-9d270643df74
+    sentinel:
+      transport:
+        dashboard: 127.0.0.1:8080  #sentinel控制台地址
+      # 取消Sentinel控制台懒加载
+      eager: true
+      #nacos配置动态限流规则
+#      datasource:
+#        ds:
+#          nacos:
+#            server-addr: ${spring.cloud.nacos.discovery.server-addr} #nacos地址
+#            dataId: ${spring.application.name}-sentinel
+#            groupId: SENTINEL-DATASOURCE
+#            rule-type: flow
+#            namespace: ${spring.cloud.nacos.discovery.namespace}
+seata:
+  enabled: true
+  tx-service-group: my_test_tx_group
+  enable-auto-data-source-proxy: true
+  application-id: ${spring.application.name}
+  config:
+    type: nacos
+    nacos:
+      group: SEATA_GROUP
+      server-addr: 47.111.244.5:8848
+      namespace: 82632dc2-fce3-4288-b49e-9d270643df74
+  registry:
+    type: nacos
+    nacos:
+      cluster: default
+      server-addr: 47.111.244.5:8848
+      namespace: 82632dc2-fce3-4288-b49e-9d270643df74
+
+swagger:
+  enabled: false
+  base-path: /**
+  base-package: 'cn.demoorigin.micro.market.frontend'
+  title: '行情API'
+  description: '基于Swagger构建的SpringBoot RESTApi 文档'
+  version: '1.0.0'
+  swagger.contact.email: 'cuijianlong@demoorigin.cn'
+mybatis-plus:
+  mapper-locations: classpath*:mapper/*.xml
+  typeAliasesPackage: cn.demo.storage.feignapi.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      logic-delete-field: isDelete  #全局逻辑删除字段值 3.3.0开始支持，不需要@TableLogic
+      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+#ribbon的超时时间, 防止feign调用超时 ribbon 的超时时间必须小于熔断设置的超时时间
+ribbon:
+  ReadTimeout: 15000
+  ConnectTimeout: 15000
+  MaxAutoRetries: 1 #同一台实例最大重试次数,不包括首次调用
+  MaxAutoRetriesNextServer: 1 #重试负载均衡其他的实例最大重试次数,不包括首次调用
+  OkToRetryOnAllOperations: false  #是否所有操作都重试
+#feign打开sentinel支持
+feign:
+  sentinel:
+    enabled: true

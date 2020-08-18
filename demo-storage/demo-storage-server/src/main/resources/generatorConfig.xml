@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+  <!--配置文件-->
+  <properties resource="jdbc.properties"/>
+  <!--<classPathEntry location="F:/Repository/mysql/mysql-connector-java/5.1.45/mysql-connector-java-5.1.45.jar" />-->
+  <classPathEntry location="D:/repository/mysql/mysql-connector-java/8.0.18/mysql-connector-java-8.0.18.jar" />
+  <!--<classPathEntry location="F:/Repository/com/oracle/ojdbc14/10.2.0.4.0/ojdbc14-10.2.0.4.0.jar" />-->
+
+  <context id="Tables" targetRuntime="MyBatis3">
+    <!-- 自动生成toString方法 -->
+    <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+    <!-- 自动生成equals方法和hashcode方法 -->
+    <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"/>
+<!--    <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin"/>-->
+    <!-- 注释 -->
+    <commentGenerator>
+      <!-- 是否生成注释代时间戳 -->
+      <property name="suppressDate" value="true"/>
+      <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+      <property name="suppressAllComments" value="true"/>
+    </commentGenerator>
+<!--MYSQL-->
+    <!--数据库链接信息-->
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                    connectionURL="${datasource.url}"
+                    userId="${datasource.username}"
+                    password="${datasource.password}">
+    </jdbcConnection>
+    <!--ORACLE-->
+    <!--<jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver"-->
+                    <!--connectionURL="jdbc:oracle:thin:@1.85.3.154:9075:hiop"-->
+                    <!--userId="Senyint_message_log"-->
+                    <!--password="SenyintHiop_v9">-->
+    <!--</jdbcConnection>-->
+
+    <!-- 是否使用bigDecimal， false可自动转化以下类型（Long, Integer, Short, etc.） -->
+    <javaTypeResolver >
+      <property name="forceBigDecimals" value="true" />
+    </javaTypeResolver>
+    <!-- 生成的POJO类的位置. targetPackage为包名, targetProject为项目位置, 采用相对路径 -->
+    <javaModelGenerator targetPackage="cn.demoorigin.storage.entity" targetProject="src/main/java">
+      <property name="enableSubPackages" value="false" />
+      <property name="trimStrings" value="true" />
+    </javaModelGenerator>
+    <!-- mapper映射文件生成的位置 -->
+    <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources">
+      <property name="enableSubPackages" value="false" />
+    </sqlMapGenerator>
+    <!-- mapper接口生成的位置 -->
+    <javaClientGenerator type="XMLMAPPER" targetPackage="cn.demoorigin.storage.dao" targetProject="src/main/java">
+      <property name="enableSubPackages" value="false" />
+    </javaClientGenerator>
+
+    <!-- escapeWildcards 设置为 true 可以帮助抵御 SQL 注入 -->
+    <table schema="demo_storage" tableName="storage" domainObjectName=""
+           enableCountByExample="false"
+           enableDeleteByExample="false" enableSelectByExample="false"
+           enableUpdateByExample="false"
+           escapeWildcards="true">
+      <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+    </table>
+
+  </context>
+</generatorConfiguration>

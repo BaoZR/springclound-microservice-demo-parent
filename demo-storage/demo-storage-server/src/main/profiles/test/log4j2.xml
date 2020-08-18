@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="off" monitorInterval="30">
+    <properties>
+        <property name="LOG_HOME">/usr/local/var/log/storage</property>
+        <property name="ERROR_LOG_FILE_NAME">error</property>
+        <property name="APP_LOG_FILE_NAME">app</property>
+        <property name="PATTERN_LAYOUT">%-d{yyyy-MM-dd HH:mm:ss.SSS} {%pid} %-5p %-3T [%traceId][%X{traceid}] (%F:%L) - %m%n</property>
+    </properties>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${PATTERN_LAYOUT}"/>
+            <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
+        </Console>
+        <RollingRandomAccessFile name="AppLog" fileName="${LOG_HOME}/${APP_LOG_FILE_NAME}.log"
+                                 filePattern="${LOG_HOME}/history/${APP_LOG_FILE_NAME}.log.%d{yyyy-MM-dd}-%i">
+            <PatternLayout pattern="${PATTERN_LAYOUT}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="2000 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingRandomAccessFile>
+        <RollingRandomAccessFile name="InvokeLog" fileName="${LOG_HOME}/invoke.log"
+                                 filePattern="${LOG_HOME}/history/invoke.log.%d{yyyy-MM-dd}-%i">
+            <PatternLayout pattern="${PATTERN_LAYOUT}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="2000 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingRandomAccessFile>
+        <RollingRandomAccessFile name="ErrorLog" fileName="${LOG_HOME}/${ERROR_LOG_FILE_NAME}.log"
+                                 filePattern="${LOG_HOME}/history/${ERROR_LOG_FILE_NAME}.log.%d{yyyy-MM-dd}">
+            <ThresholdFilter level="ERROR"/>
+            <PatternLayout pattern="${PATTERN_LAYOUT}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="2000 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingRandomAccessFile>
+        <RollingRandomAccessFile name="jmonitorappender" fileName="${LOG_HOME}/jmonitor.log"
+                                 filePattern="${LOG_HOME}/history/jmonitor.log.%d{yyyy-MM-dd}">
+            <PatternLayout pattern="${PATTERN_LAYOUT}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="500 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy/>
+        </RollingRandomAccessFile>
+        <RollingRandomAccessFile name="jmonitorlogstoreappender"
+                                 fileName="${LOG_HOME}/jmonitor.logstore.log"
+                                 filePattern="${LOG_HOME}/history/jmonitor.logstore.log.%d{yyyy-MM-dd}">
+            <PatternLayout pattern="${PATTERN_LAYOUT}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="500 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy/>
+        </RollingRandomAccessFile>
+
+    </Appenders>
+
+    <Loggers>
+        <logger name="org.springframework" level="info" additivity="false" includeLocation="true">
+            <appender-ref ref="AppLog"/>
+        </logger>
+
+        <logger name="cn.demoorigin.micro" level="info" additivity="false" includeLocation="true">
+            <appender-ref ref="ErrorLog"/>
+            <appender-ref ref="AppLog"/>
+        </logger>
+
+        <logger name="invokeLog" level="info" additivity="false" includeLocation="true">
+            <appender-ref ref="InvokeLog"/>
+        </logger>
+
+        <root level="info" includeLocation="true">
+            <appender-ref ref="AppLog"/>
+        </root>
+
+    </Loggers>
+</Configuration>

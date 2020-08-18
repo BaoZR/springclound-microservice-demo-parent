@@ -90,14 +90,14 @@
         </javaTypeResolver>
 
         <!-- 生成的POJO类的位置. targetPackage为包名, targetProject为项目位置, 采用相对路径 -->
-        <javaModelGenerator targetPackage="cn.demoorigin.order.model.entity" targetProject="src/main/java">
+        <javaModelGenerator targetPackage="cn.demo.order.model.entity" targetProject="src/main/java">
             <!-- enableSubPackages: 是否让schema作为包的后缀 -->
             <property name="enableSubPackages" value="true"/>
         </javaModelGenerator>
         <!-- mapper映射文件生成的位置 -->
         <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources"/>
         <!-- mapper接口生成的位置 -->
-        <javaClientGenerator type="XMLMAPPER" targetPackage="cn.demoorigin.order.mapper"
+        <javaClientGenerator type="XMLMAPPER" targetPackage="cn.demo.order.mapper"
                              targetProject="src/main/java"/>
 
         <!-- 指定数据库表 需要生成哪个表，再打开注释 -->

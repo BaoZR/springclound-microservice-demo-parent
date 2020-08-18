@@ -1,0 +1,15 @@
+version: '3'
+services:
+  mysql_compose:
+    image: mysql:5.7
+    container_name: mysql_5.7_confluence
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - 6606:3306
+    volumes:
+      - /data/docker/mysql-5.7/data:/var/lib/mysql
+      - /data/docker/mysql-5.7/conf/mymysqld.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
+    environment:
+      MYSQL_ROOT_PASSWORD: "c0!&saoN9z1uuGKl"
+      TZ: Asia/Shanghai

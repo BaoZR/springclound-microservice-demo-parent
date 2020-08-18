@@ -1,7 +1,7 @@
 singleServerConfig:
   database: 0
   password: 2g9cvi7xcJbDdshO
-  address: "redis://47.111.254.203:6379"
+  address: "redis://127.0.0.1:6379"
   idleConnectionTimeout: 10000
   pingTimeout: 1000
   connectTimeout: 10000

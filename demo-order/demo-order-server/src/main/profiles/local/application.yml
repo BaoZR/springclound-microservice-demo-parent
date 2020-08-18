@@ -7,8 +7,8 @@ server:
 
 nacos:
   config:
-    server-addr: 47.111.254.203:8848
-    namespace: 2886a508-8bd6-4c3b-928f-8f3e6248f915
+    server-addr: 127.0.0.1:8848
+    namespace: xxx
 
 spring:
   jackson:
@@ -19,9 +19,9 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
-      url: jdbc:mysql://47.111.254.203:3306/demo_order?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true
+      url: jdbc:mysql://127.0.0.1:3306/demo_order?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true
       username: demo
-      password: c0!&saoN9z1uuGKl
+      password: 'c0!&saoN9z1uuGKl'
       driver-class-name: com.mysql.cj.jdbc.Driver
       # 初始化大小，最小，最大
       initialSize: 5
@@ -43,11 +43,11 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 47.111.244.5:8848
+        server-addr: 127.0.0.1:8848
         namespace: 82632dc2-fce3-4288-b49e-9d270643df74
   redis:
     database: 6
-    host: 47.111.254.203
+    host: 127.0.0.1
     port: 6379
     password: 2g9cvi7xcJbDdshO
   redission-lock:
@@ -63,13 +63,13 @@ seata:
     type: nacos
     nacos:
       group: SEATA_GROUP
-      server-addr: 47.111.244.5:8848
+      server-addr: 127.0.0.1:8848
       namespace: 82632dc2-fce3-4288-b49e-9d270643df74
   registry:
     type: nacos
     nacos:
       cluster: default
-      server-addr: 47.111.244.5:8848
+      server-addr: 127.0.0.1:8848
       namespace: 82632dc2-fce3-4288-b49e-9d270643df74
 
 mybatis:
@@ -86,8 +86,8 @@ pagehelper:
 swagger:
   enabled: false
   base-path: /**
-  base-package: 'cn.demoorigin.micro.market.frontend'
+  base-package: 'cn.demo.micro.market.frontend'
   title: '行情API'
   description: '基于Swagger构建的SpringBoot RESTApi 文档'
   version: '1.0.0'
-  swagger.contact.email: 'cuijianlong@demoorigin.cn'
+  swagger.contact.email: 'demo@demo.cn'

@@ -41,7 +41,7 @@
       <property name="forceBigDecimals" value="true" />
     </javaTypeResolver>
     <!-- 生成的POJO类的位置. targetPackage为包名, targetProject为项目位置, 采用相对路径 -->
-    <javaModelGenerator targetPackage="cn.demoorigin.storage.entity" targetProject="src/main/java">
+    <javaModelGenerator targetPackage="cn.demo.storage.entity" targetProject="src/main/java">
       <property name="enableSubPackages" value="false" />
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
@@ -50,7 +50,7 @@
       <property name="enableSubPackages" value="false" />
     </sqlMapGenerator>
     <!-- mapper接口生成的位置 -->
-    <javaClientGenerator type="XMLMAPPER" targetPackage="cn.demoorigin.storage.dao" targetProject="src/main/java">
+    <javaClientGenerator type="XMLMAPPER" targetPackage="cn.demo.storage.dao" targetProject="src/main/java">
       <property name="enableSubPackages" value="false" />
     </javaClientGenerator>
 

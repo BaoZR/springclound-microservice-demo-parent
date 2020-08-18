@@ -6,8 +6,8 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 47.111.244.5:8848
-        namespace: 82632dc2-fce3-4288-b49e-9d270643df74
+        server-addr: 127.0.0.1:8848
+        namespace:
     sentinel:
       transport:
         dashboard: 127.0.0.1:8080
@@ -20,14 +20,14 @@ spring:
           response-status: 455
           response-body: error!
       #nacos配置动态限流规则
-#      datasource:
-#        ds:
-#          nacos:
-#            server-addr: ${spring.cloud.nacos.discovery.server-addr} #nacos地址
-#            dataId: ${spring.application.name}-sentinel
-#            groupId: SENTINEL-DATASOURCE
-#            rule-type: flow
-#            namespace: ${spring.cloud.nacos.discovery.namespace}
+    #      datasource:
+    #        ds:
+    #          nacos:
+    #            server-addr: ${spring.cloud.nacos.discovery.server-addr} #nacos地址
+    #            dataId: ${spring.application.name}-sentinel
+    #            groupId: SENTINEL-DATASOURCE
+    #            rule-type: flow
+    #            namespace: ${spring.cloud.nacos.discovery.namespace}
     gateway:
       httpclient:
         websocket:

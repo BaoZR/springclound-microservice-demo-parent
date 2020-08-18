@@ -65,7 +65,7 @@
         <logger name="org.springframework" level="info" additivity="false" includeLocation="true">
             <appender-ref ref="AppLog"/>
         </logger>
-        <logger name="cn.demoorigin.micro" level="info" additivity="false" includeLocation="true">
+        <logger name="cn.demo.micro" level="info" additivity="false" includeLocation="true">
             <appender-ref ref="ErrorLog"/>
             <appender-ref ref="AppLog"/>
         </logger>

@@ -72,5 +72,32 @@
 
 
 
+## 3、基础服务搭建
+
+### 3.1、 mysql-5.7搭建
+
+[mysql-5.7搭建步骤](https://github.com/mixbe/springclound-microservice-demo-parent/tree/master/docker-application/mysql-5.7-docker)
+
+### 3.2、mysql-8.0.18搭建
+
+[mysql-8.0.18搭建步骤](https://github.com/mixbe/springclound-microservice-demo-parent/tree/master/docker-application/mysql-8.0-docker)
+
+### 3.3 、nacos服务搭建
+
+[nacos服务搭建步骤](https://github.com/mixbe/springclound-microservice-demo-parent/tree/master/docker-application/nacos-1.2.1)
+
+## 3.4 redis服务搭建
+
+[redis服务搭建步骤](https://github.com/mixbe/springclound-microservice-demo-parent/tree/master/docker-application/redis)
+
+### 3.5 、seata-server 服务搭建
+
+[seata-server服务搭建步骤](https://github.com/mixbe/springclound-microservice-demo-parent/tree/master/docker-application/seata-server-1.1.0)
+
+
+
+
+
+
 
 

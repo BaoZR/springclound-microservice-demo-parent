@@ -1,13 +1,13 @@
 package cn.demo.order.server.impl;
 
-import cn.demo.order.feign.api.request.OrderReq;
-import cn.demo.order.manager.OrderManager;
-import cn.demo.order.model.entity.demoOrderEntity;
-import cn.demo.order.server.IOrderService;
-import cn.demo.storage.feigapi.entity.Storage;
 import cn.demo.common.model.pojo.RequestObject;
 import cn.demo.common.model.pojo.ResponseResult;
+import cn.demo.order.feign.api.entity.OrderEntity;
+import cn.demo.order.feign.api.manager.OrderManager;
+import cn.demo.order.feign.api.request.OrderReq;
+import cn.demo.order.server.IOrderService;
 import cn.demo.storage.feigapi.api.StorageApi;
+import cn.demo.storage.feigapi.entity.Storage;
 import io.seata.core.context.RootContext;
 import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
@@ -56,7 +56,7 @@ public class OrderServiceImpl implements IOrderService {
 
         //修改订单状态为已完成
         log.info("修改订单状态开始");
-        demoOrderEntity orderEntity = new demoOrderEntity();
+        OrderEntity orderEntity = new OrderEntity();
         BeanUtils.copyProperties(order, orderEntity);
         orderManager.add(orderEntity);
         log.info("修改订单状态结束");

@@ -13,8 +13,8 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
       url: jdbc:mysql://127.0.0.1:3306/demo_storage?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true
-      username: demo
-      password: c0!&saoN9z1uuGKl
+      username: root
+      password: mrMGB7fbDkZ9I5Pp
       max-active: 20
       min-idle: 2
       driver-class-name: com.mysql.cj.jdbc.Driver

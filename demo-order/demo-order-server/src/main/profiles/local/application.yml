@@ -8,7 +8,7 @@ server:
 nacos:
   config:
     server-addr: 127.0.0.1:8848
-    namespace: xxx
+    #namespace: xxx
 
 spring:
   jackson:
@@ -20,8 +20,8 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
       url: jdbc:mysql://127.0.0.1:3306/demo_order?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true
-      username: demo
-      password: 'c0!&saoN9z1uuGKl'
+      username: root
+      password: 'mrMGB7fbDkZ9I5Pp'
       driver-class-name: com.mysql.cj.jdbc.Driver
       # 初始化大小，最小，最大
       initialSize: 5
@@ -44,12 +44,12 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
-        namespace: 82632dc2-fce3-4288-b49e-9d270643df74
+        #namespace: 82632dc2-fce3-4288-b49e-9d270643df74
   redis:
     database: 6
     host: 127.0.0.1
     port: 6379
-    password: 2g9cvi7xcJbDdshO
+    password: Abc1234
   redission-lock:
     enable: true
 
@@ -64,13 +64,13 @@ seata:
     nacos:
       group: SEATA_GROUP
       server-addr: 127.0.0.1:8848
-      namespace: 82632dc2-fce3-4288-b49e-9d270643df74
+      #namespace: 82632dc2-fce3-4288-b49e-9d270643df74
   registry:
     type: nacos
     nacos:
       cluster: default
       server-addr: 127.0.0.1:8848
-      namespace: 82632dc2-fce3-4288-b49e-9d270643df74
+      #namespace: 82632dc2-fce3-4288-b49e-9d270643df74
 
 mybatis:
   typeAliasesPackage: cn.demoorigin.order.model.entity

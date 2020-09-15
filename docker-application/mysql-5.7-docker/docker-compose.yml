@@ -1,15 +1,19 @@
 version: '3'
 services:
   mysql_compose:
-    image: mysql:5.7
-    container_name: mysql_5.7_confluence
-    command: --default-authentication-plugin=mysql_native_password
+    image: 'mysql/mysql-server:5.7'
+    container_name: mysql_5.7
+    command:
+      --default-authentication-plugin=mysql_native_password
+      --lower_case_table_names=0
     restart: always
+
     ports:
-      - 6606:3306
+      - 3337:3306
     volumes:
+      # 映射mysql的data目录
       - /var/docker/mysql-5.7/data:/var/lib/mysql
-      - /var/docker/mysql-5.7/conf/mymysqld.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
     environment:
-      MYSQL_ROOT_PASSWORD: "Abc123456"
+      MYSQL_USER: root
+      MYSQL_ROOT_PASSWORD: Abc123456
       TZ: Asia/Shanghai

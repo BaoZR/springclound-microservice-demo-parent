@@ -1,0 +1,11 @@
+version: '2'
+
+services:
+  redis:
+    image: redis:6.0.8
+    container_name: redis-6.0.8
+    command: redis-server --requirepass Abc1234
+    ports:
+      - "6379:6379"
+    volumes:
+      - /var/docker/redis/data:/data

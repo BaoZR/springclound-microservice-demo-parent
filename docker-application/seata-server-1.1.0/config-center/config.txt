@@ -30,9 +30,9 @@ store.mode=db
 store.db.dbType=mysql
 store.db.datasource=druid
 store.db.driverClassName=com.mysql.jdbc.Driver
-store.db.url=jdbc:mysql://172.16.168.126:6606/seata?useUnicode=true
-store.db.user=root
-store.db.password=c0!&saoN9z1uuGKl
+store.db.url=jdbc:mysql://127.0.0.1:3337/seata?useUnicode=true
+store.db.user=admin
+store.db.password=admin123
 store.db.minConn=1
 store.db.maxConn=3
 store.db.globalTable=global_table

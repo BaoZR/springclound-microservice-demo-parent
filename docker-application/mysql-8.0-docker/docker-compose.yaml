@@ -1,0 +1,14 @@
+version: "3.7"
+services:
+  db:
+    image: mysql:8.0.18
+    container_name: mysql_8.0.18
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: "mrMGB7fbDkZ9I5Pp"
+      TZ: Asia/Shanghai
+    ports:
+      - "3306:3306"
+    volumes:
+      - /var/docker/mysql-8.0/data:/var/lib/mysql

@@ -1,10 +1,9 @@
 package cn.demo.storage.feigapi.api;
 
-import cn.demo.storage.feigapi.dto.StorageSelectDTO;
-import cn.demo.storage.feigapi.entity.Storage;
-import cn.demo.storage.feigapi.fallback.StorageApiFallbackFactory;
 import cn.demo.common.model.pojo.RequestObject;
 import cn.demo.common.model.pojo.ResponseResult;
+import cn.demo.storage.feigapi.dto.StorageSelectDTO;
+import cn.demo.storage.feigapi.entity.Storage;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,11 +15,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @Description
  * @Date 2020/4/16 15:37
  */
-@FeignClient(path = "storage", value = "demo-storage",fallbackFactory = StorageApiFallbackFactory.class)
+@FeignClient(path = "storage", value = "demo-storage"/*,fallbackFactory = StorageApiFallbackFactory.class*/)
 public interface StorageApi {
 
     /**
      * 根据ID查询
+     *
      * @param requestObject
      * @return
      */
@@ -29,6 +29,7 @@ public interface StorageApi {
 
     /**
      * 添加
+     *
      * @param requestObject
      * @return
      */
@@ -37,13 +38,16 @@ public interface StorageApi {
 
     /**
      * 删除
+     *
      * @param requestObject
      * @return
      */
     @RequestMapping(path = "/deleteById", method = RequestMethod.POST)
     ResponseResult deleteById(@RequestBody RequestObject<Storage> requestObject);
+
     /**
      * 修改
+     *
      * @param requestObject
      * @return
      */
@@ -52,6 +56,7 @@ public interface StorageApi {
 
     /**
      * 分页查询
+     *
      * @param requestObject
      * @return
      */

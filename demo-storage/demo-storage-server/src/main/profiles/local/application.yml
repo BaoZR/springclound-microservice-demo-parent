@@ -1,5 +1,6 @@
 server:
   port: 40001
+
 spring:
   main:
     #支持名称相同的bean被覆盖
@@ -43,10 +44,11 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
-        namespace: 82632dc2-fce3-4288-b49e-9d270643df74
-    sentinel:
-      transport:
-        dashboard: 127.0.0.1:8080  #sentinel控制台地址
+        # namespace: 82632dc2-fce3-4288-b49e-9d270643df74
+      #    sentinel:
+      #      transport:
+      #        dashboard: 127.0.0.1:8080  #sentinel控制台地址
+
       # 取消Sentinel控制台懒加载
       eager: true
       #nacos配置动态限流规则
@@ -58,6 +60,13 @@ spring:
 #            groupId: SENTINEL-DATASOURCE
 #            rule-type: flow
 #            namespace: ${spring.cloud.nacos.discovery.namespace}
+
+# nacos 配置中心
+nacos:
+  config:
+    server-addr: 127.0.0.1:8848
+    #namespace: xxx
+
 seata:
   enabled: true
   tx-service-group: my_test_tx_group
@@ -68,13 +77,13 @@ seata:
     nacos:
       group: SEATA_GROUP
       server-addr: 127.0.0.1:8848
-      namespace: 82632dc2-fce3-4288-b49e-9d270643df74
+      # namespace: 82632dc2-fce3-4288-b49e-9d270643df74
   registry:
     type: nacos
     nacos:
       cluster: default
       server-addr: 127.0.0.1:8848
-      namespace: 82632dc2-fce3-4288-b49e-9d270643df74
+      # namespace: 82632dc2-fce3-4288-b49e-9d270643df74
 
 swagger:
   enabled: false
@@ -84,6 +93,7 @@ swagger:
   description: '基于Swagger构建的SpringBoot RESTApi 文档'
   version: '1.0.0'
   swagger.contact.email: 'cuijianlong@demo.cn'
+
 mybatis-plus:
   mapper-locations: classpath*:mapper/*.xml
   typeAliasesPackage: cn.demo.storage.feignapi.entity
@@ -97,12 +107,13 @@ mybatis-plus:
       logic-delete-value: 1 # 逻辑已删除值(默认为 1)
       logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
 #ribbon的超时时间, 防止feign调用超时 ribbon 的超时时间必须小于熔断设置的超时时间
-ribbon:
-  ReadTimeout: 15000
-  ConnectTimeout: 15000
-  MaxAutoRetries: 1 #同一台实例最大重试次数,不包括首次调用
-  MaxAutoRetriesNextServer: 1 #重试负载均衡其他的实例最大重试次数,不包括首次调用
-  OkToRetryOnAllOperations: false  #是否所有操作都重试
+#ribbon:
+#  ReadTimeout: 15000
+#  ConnectTimeout: 15000
+#  MaxAutoRetries: 1 #同一台实例最大重试次数,不包括首次调用
+#  MaxAutoRetriesNextServer: 1 #重试负载均衡其他的实例最大重试次数,不包括首次调用
+#  OkToRetryOnAllOperations: false  #是否所有操作都重试
+
 #feign打开sentinel支持
 feign:
   sentinel:

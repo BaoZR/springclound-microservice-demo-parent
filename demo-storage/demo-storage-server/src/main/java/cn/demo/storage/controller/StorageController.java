@@ -1,14 +1,12 @@
 package cn.demo.storage.controller;
 
-import cn.demo.storage.fallback.ExceptionUtil;
-import cn.demo.storage.feigapi.entity.Storage;
-import cn.demo.storage.service.IStorageService;
+import cn.demo.common.model.pojo.RequestObject;
+import cn.demo.common.model.pojo.ResponseResult;
 import cn.demo.storage.code.StorageCode;
 import cn.demo.storage.feigapi.api.StorageApi;
 import cn.demo.storage.feigapi.dto.StorageSelectDTO;
-import cn.demo.common.model.pojo.RequestObject;
-import cn.demo.common.model.pojo.ResponseResult;
-import com.alibaba.csp.sentinel.annotation.SentinelResource;
+import cn.demo.storage.feigapi.entity.Storage;
+import cn.demo.storage.service.IStorageService;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -58,8 +56,8 @@ public class StorageController implements StorageApi {
      * @return
      */
     @Override
-    @SentinelResource(value = "sentinel-findById", fallback  = "fallbackHandler", fallbackClass = {
-            ExceptionUtil.class})
+//    @SentinelResource(value = "sentinel-findById", fallback  = "fallbackHandler", fallbackClass = {
+//            ExceptionUtil.class})
     public ResponseResult findById(@RequestBody @Valid RequestObject<StorageSelectDTO> requestObject) {
         String a = "1";
         String b = "2";
@@ -108,8 +106,8 @@ public class StorageController implements StorageApi {
         return ResponseResult.success(storagePageInfo);
     }
 
-    @SentinelResource(value = "sentinel-test", fallback  = "fallbackHandler", fallbackClass = {
-            ExceptionUtil.class})
+//    @SentinelResource(value = "sentinel-test", fallback  = "fallbackHandler", fallbackClass = {
+//            ExceptionUtil.class})
     @PostMapping("/test")
     public ResponseResult test(RequestObject requestObject){
         log.info("test...");

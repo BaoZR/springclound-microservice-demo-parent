@@ -1,12 +1,11 @@
 package cn.demo.storage.service.impl;
 
-import cn.demo.storage.feigapi.entity.Storage;
-import cn.demo.storage.service.IStorageService;
 import cn.demo.common.exception.BaseException;
 import cn.demo.common.model.base.BaseCode;
 import cn.demo.storage.code.StorageCode;
 import cn.demo.storage.dao.StorageMapper;
-import com.alibaba.csp.sentinel.annotation.SentinelResource;
+import cn.demo.storage.feigapi.entity.Storage;
+import cn.demo.storage.service.IStorageService;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.alibaba.csp.sentinel.slots.block.degrade.DegradeException;
 import com.alibaba.csp.sentinel.slots.block.flow.FlowException;
@@ -26,7 +25,7 @@ public class StorageServiceImpl extends ServiceImpl<StorageMapper, Storage> impl
 
 
     @Override
-    @SentinelResource(value = "sentinel-selectById", fallback = "fallbackHandler")
+    //@SentinelResource(value = "sentinel-selectById", fallback = "fallbackHandler")
     public Storage selectById(String id) {
 
         throw new RuntimeException("测试熔断。。");

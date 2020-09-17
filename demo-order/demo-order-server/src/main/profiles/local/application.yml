@@ -1,7 +1,7 @@
 server:
   port: 40000
   servlet:
-    context-path: /order
+    # context-path: /order
     session:
       timeout: 2000s
 

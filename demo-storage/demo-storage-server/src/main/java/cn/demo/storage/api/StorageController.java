@@ -1,4 +1,4 @@
-package cn.demo.storage.controller;
+package cn.demo.storage.api;
 
 import cn.demo.common.model.pojo.RequestObject;
 import cn.demo.common.model.pojo.ResponseResult;
@@ -15,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -29,13 +28,14 @@ import java.util.Objects;
  */
 @Slf4j
 @RestController
-@RequestMapping("/storage")
 public class StorageController implements StorageApi {
 
     @Autowired
     private IStorageService storageService;
 
     /**
+     * @param requestObject
+     * @return
      * @SentinelResource 用于定义资源，并提供可选的异常处理和 fallback 配置项。 @SentinelResource 注解包含以下属性：
      * value：资源名称，必需项（不能为空）
      * entryType：entry 类型，可选项（默认为 EntryType.OUT）
@@ -52,8 +52,6 @@ public class StorageController implements StorageApi {
      * defaultFallback 函数默认需要和原方法在同一个类中。若希望使用其他类的函数，则可以指定 fallbackClass 为对应的类的 Class 对象，注意对应的函数必需为 static 函数，否则无法解析。
      * 特别地，若 blockHandler 和 fallback 都进行了配置，则被限流降级而抛出 BlockException 时只会进入 blockHandler 处理逻辑。
      * 若未配置 blockHandler、fallback 和 defaultFallback，则被限流降级时会将 BlockException 直接抛出。
-     * @param requestObject
-     * @return
      */
     @Override
 //    @SentinelResource(value = "sentinel-findById", fallback  = "fallbackHandler", fallbackClass = {
@@ -63,23 +61,24 @@ public class StorageController implements StorageApi {
         String b = "2";
         Storage one;
 //        try {
-            //模拟异常，。。
-            if (a.equals(requestObject.getData().getId())){
+        //模拟异常，。。
+        if (a.equals(requestObject.getData().getId())) {
 //                int n = 1/0;
-                throw new RuntimeException("findById发生异常");
-            }
+            throw new RuntimeException("findById发生异常");
+        }
 //        } catch (Exception e) {
 //            throw new BaseException(StorageCode.FIND_FAIL);
 //        }
 
-        if (b.equals(requestObject.getData().getId())){
+        if (b.equals(requestObject.getData().getId())) {
             //模拟更细粒度方法限流操作
             one = storageService.selectById(requestObject.getData().getId());
-        }else {
+        } else {
             one = storageService.getOne(Wrappers.<Storage>lambdaQuery().eq(Storage::getId, requestObject.getData().getId()));
         }
-        return Objects.isNull(one)?ResponseResult.fail(StorageCode.FIND_FAIL):ResponseResult.success(one);
+        return Objects.isNull(one) ? ResponseResult.fail(StorageCode.FIND_FAIL) : ResponseResult.success(one);
     }
+
     @Override
     public ResponseResult insert(@RequestBody RequestObject<Storage> requestObject) {
         storageService.save(requestObject.getData());
@@ -106,10 +105,10 @@ public class StorageController implements StorageApi {
         return ResponseResult.success(storagePageInfo);
     }
 
-//    @SentinelResource(value = "sentinel-test", fallback  = "fallbackHandler", fallbackClass = {
+    //    @SentinelResource(value = "sentinel-test", fallback  = "fallbackHandler", fallbackClass = {
 //            ExceptionUtil.class})
     @PostMapping("/test")
-    public ResponseResult test(RequestObject requestObject){
+    public ResponseResult test(RequestObject requestObject) {
         log.info("test...");
         throw new RuntimeException("发生异常");
     }

@@ -20,7 +20,7 @@ import javax.annotation.Resource;
  */
 @Slf4j
 @RestController
-@RequestMapping
+@RequestMapping("/order")
 public class OrderController {
     @Autowired
     private IOrderService iOrderService;
@@ -58,8 +58,9 @@ public class OrderController {
         return ResponseResult.success("");
     }
 
+
     @GetMapping("/redis")
-    public  ResponseResult redisTest() {
+    public ResponseResult redisTest() {
         redisUtil.set("hello", "hello", 60);
         Object result = redisUtil.getStr("hello");
         return ResponseResult.success(result);

@@ -16,7 +16,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @Description
  * @Date 2020/4/16 15:37
  */
-@FeignClient(path = "storage", value = "demo-storage", fallbackFactory = StorageApiFallbackFactory.class)
+@FeignClient(
+        path = "/feignApi/storage",
+        value = "demo-storage",
+        contextId = "storage",
+        fallbackFactory = StorageApiFallbackFactory.class)
 public interface StorageApi {
 
     /**

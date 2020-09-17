@@ -35,13 +35,13 @@ spring:
       maxPoolPreparedStatementPerConnectionSize: 20
       # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
       connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
-#  redis:
-#    database: 6
-#    host: 127.0.0.1
-#    port: 6379
-#    password: Abc1234
-#  redission-lock:
-#    enable: true
+  redis:
+    database: 6
+    host: 127.0.0.1
+    port: 6379
+    password: Abc1234
+  redission-lock:
+    enable: true
   cloud:
     nacos:
       discovery:
@@ -56,7 +56,7 @@ spring:
       #nacos配置动态限流规则
       datasource:
         # 这边可以配置多个如ds1
-        ds1:
+        ds:
           nacos:
             # nacos地址
             server-addr: ${spring.cloud.nacos.discovery.server-addr}
@@ -65,19 +65,13 @@ spring:
             # rule-type：表示数据源中规则属于哪种类型，如flow、degrade、param-flow、gw-flow等。
             rule-type: flow
             # namespace: ${spring.cloud.nacos.discovery.namespace}
-  redis:
-    database: 6
-    host: 127.0.0.1
-    port: 6379
-    password: Abc1234
-  redission-lock:
-    enable: true
 
-
+# feign sentinel 是否开启
 feign:
   sentinel:
     enabled: true
 
+# nacos 配置中心
 nacos:
   config:
     server-addr: 127.0.0.1:8848

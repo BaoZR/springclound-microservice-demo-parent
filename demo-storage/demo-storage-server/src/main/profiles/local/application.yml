@@ -2,9 +2,9 @@ server:
   port: 40001
 
 spring:
-  main:
-    #支持名称相同的bean被覆盖
-    allow-bean-definition-overriding: true
+#  main:
+#    #支持名称相同的bean被覆盖
+#    allow-bean-definition-overriding: true
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time: GMT+8
@@ -54,12 +54,12 @@ spring:
       #nacos配置动态限流规则
       datasource:
         # 这边可以配置多个如ds1
-        ds:
+        ds1:
           nacos:
             # nacos地址
             server-addr: ${spring.cloud.nacos.discovery.server-addr}
-            dataId: ${spring.application.name}-sentinel
-            groupId: SENTINEL-DATASOURCE
+            data-id: ${spring.application.name}-sentinel
+            group-id: SENTINEL-DATASOURCE
             # rule-type：表示数据源中规则属于哪种类型，如flow、degrade、param-flow、gw-flow等。
             rule-type: flow
             # namespace: ${spring.cloud.nacos.discovery.namespace}

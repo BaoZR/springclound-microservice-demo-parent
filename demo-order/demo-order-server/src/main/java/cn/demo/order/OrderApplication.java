@@ -14,9 +14,9 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @Author: 义云
  * @Created: 2020-04-11 14:52
  */
-@EnableFeignClients(basePackages = "cn.demo.order")
+@EnableFeignClients(basePackages = "cn.demo")
 @EnableDiscoveryClient
-@SpringBootApplication(scanBasePackages = {"cn.demo.order"}, exclude = DataSourceAutoConfiguration.class)
+@SpringBootApplication(scanBasePackages = {"cn.demo"}, exclude = DataSourceAutoConfiguration.class)
 @MapperScan(value = {"cn.demo.order.feign.api.mapper", "cn.demo.order.feign.api.mapperbyman"})
 public class OrderApplication {
     public static void main(String[] args) {

@@ -22,8 +22,4 @@ public class StorageApplication {
     public static void main(String[] args) {
         SpringApplication.run(StorageApplication.class, args);
     }
-//    @Bean
-//    public SentinelResourceAspect sentinelResourceAspect() {
-//        return new SentinelResourceAspect();
-//    }
 }

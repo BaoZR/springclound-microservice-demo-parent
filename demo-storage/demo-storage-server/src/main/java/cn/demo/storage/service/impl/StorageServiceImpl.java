@@ -6,6 +6,7 @@ import cn.demo.storage.code.StorageCode;
 import cn.demo.storage.dao.StorageMapper;
 import cn.demo.storage.feigapi.entity.Storage;
 import cn.demo.storage.service.IStorageService;
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.alibaba.csp.sentinel.slots.block.degrade.DegradeException;
 import com.alibaba.csp.sentinel.slots.block.flow.FlowException;
@@ -25,14 +26,14 @@ public class StorageServiceImpl extends ServiceImpl<StorageMapper, Storage> impl
 
 
     @Override
-    //@SentinelResource(value = "sentinel-selectById", fallback = "fallbackHandler")
+    @SentinelResource(value = "sentinel-selectById", fallback = "fallbackHandler")
     public Storage selectById(String id) {
-
         throw new RuntimeException("测试熔断。。");
         //return baseMapper.selectById(id);
     }
+
     public Storage blockExceptionSelectById(String id, BlockException e) {
-        log.info("Oops blockExceptionSelectById: " + e.getClass().getCanonicalName()+",ID:{}",id);
+        log.info("Oops blockExceptionSelectById: " + e.getClass().getCanonicalName() + ",ID:{}", id);
         // 不同的异常返回不同的提示语
         if (e instanceof FlowException) {
             log.info("sentinel-selectById限流了");
@@ -40,7 +41,8 @@ public class StorageServiceImpl extends ServiceImpl<StorageMapper, Storage> impl
         }
         throw new BaseException(BaseCode.CALL_TIME);
     }
-    public  Storage fallbackHandler(String id, Throwable e) {
+
+    public Storage fallbackHandler(String id, Throwable e) {
         log.info("Oops fallbackHandler: " + e.getClass().getCanonicalName());
         // 不同的异常返回不同的提示语
         if (e instanceof DegradeException) {

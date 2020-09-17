@@ -4,6 +4,7 @@ import cn.demo.common.model.pojo.RequestObject;
 import cn.demo.common.model.pojo.ResponseResult;
 import cn.demo.storage.feigapi.dto.StorageSelectDTO;
 import cn.demo.storage.feigapi.entity.Storage;
+import cn.demo.storage.feigapi.fallback.StorageApiFallbackFactory;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @Description
  * @Date 2020/4/16 15:37
  */
-@FeignClient(path = "storage", value = "demo-storage"/*,fallbackFactory = StorageApiFallbackFactory.class*/)
+@FeignClient(path = "storage", value = "demo-storage", fallbackFactory = StorageApiFallbackFactory.class)
 public interface StorageApi {
 
     /**

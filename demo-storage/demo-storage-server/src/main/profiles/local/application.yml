@@ -45,21 +45,29 @@ spring:
       discovery:
         server-addr: 127.0.0.1:8848
         # namespace: 82632dc2-fce3-4288-b49e-9d270643df74
-      #    sentinel:
-      #      transport:
-      #        dashboard: 127.0.0.1:8080  #sentinel控制台地址
-
-      # 取消Sentinel控制台懒加载
-      eager: true
+    sentinel:
+      transport:
+        # 取消Sentinel控制台懒加载
+        eager: true
+        # sentinel控制台地址
+        dashboard: 127.0.0.1:8080
       #nacos配置动态限流规则
-#      datasource:
-#        ds:
-#          nacos:
-#            server-addr: ${spring.cloud.nacos.discovery.server-addr} #nacos地址
-#            dataId: ${spring.application.name}-sentinel
-#            groupId: SENTINEL-DATASOURCE
-#            rule-type: flow
-#            namespace: ${spring.cloud.nacos.discovery.namespace}
+      datasource:
+        # 这边可以配置多个如ds1
+        ds:
+          nacos:
+            # nacos地址
+            server-addr: ${spring.cloud.nacos.discovery.server-addr}
+            dataId: ${spring.application.name}-sentinel
+            groupId: SENTINEL-DATASOURCE
+            # rule-type：表示数据源中规则属于哪种类型，如flow、degrade、param-flow、gw-flow等。
+            rule-type: flow
+            # namespace: ${spring.cloud.nacos.discovery.namespace}
+
+# feign打开sentinel支持
+feign:
+  sentinel:
+    enabled: true
 
 # nacos 配置中心
 nacos:
@@ -97,15 +105,17 @@ swagger:
 mybatis-plus:
   mapper-locations: classpath*:mapper/*.xml
   typeAliasesPackage: cn.demo.storage.feignapi.entity
-  configuration:
-    map-underscore-to-camel-case: true
-    cache-enabled: false
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-  global-config:
-    db-config:
-      logic-delete-field: isDelete  #全局逻辑删除字段值 3.3.0开始支持，不需要@TableLogic
-      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
-      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+#  configuration:
+#    map-underscore-to-camel-case: true
+#    cache-enabled: false
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#  global-config:
+#    db-config:
+#      logic-delete-field: isDelete  #全局逻辑删除字段值 3.3.0开始支持，不需要@TableLogic
+#      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
+#      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+
+
 #ribbon的超时时间, 防止feign调用超时 ribbon 的超时时间必须小于熔断设置的超时时间
 #ribbon:
 #  ReadTimeout: 15000
@@ -113,8 +123,3 @@ mybatis-plus:
 #  MaxAutoRetries: 1 #同一台实例最大重试次数,不包括首次调用
 #  MaxAutoRetriesNextServer: 1 #重试负载均衡其他的实例最大重试次数,不包括首次调用
 #  OkToRetryOnAllOperations: false  #是否所有操作都重试
-
-#feign打开sentinel支持
-feign:
-  sentinel:
-    enabled: true

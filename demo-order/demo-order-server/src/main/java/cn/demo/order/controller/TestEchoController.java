@@ -18,12 +18,6 @@ public class TestEchoController {
     @Autowired
     private EchoApi echoApi;
 
-    /**
-     * 测试代码
-     *
-     * @param str
-     * @return
-     */
     @GetMapping("/echo1/{str}")
     public ResponseResult testEcho1(@PathVariable("str") String str) {
         return echoApi.echo1(str);

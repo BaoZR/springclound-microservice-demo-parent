@@ -19,15 +19,20 @@ import org.springframework.web.bind.annotation.PathVariable;
         fallbackFactory = EchoServiceFallbackFactory.class)
 public interface EchoApi {
     /**
-     * 调用服务提供方的输出接口
+     * 服务提供者 接口1
      *
-     * @param str 用户输入
+     * @param str
      * @return
      */
     @GetMapping(value = "/echo1/{str}")
     ResponseResult echo1(@PathVariable("str") String str);
 
 
+    /**
+     * 服务提供者 接口2
+     *
+     * @return
+     */
     @GetMapping(value = "echo2")
     ResponseResult echo2();
 

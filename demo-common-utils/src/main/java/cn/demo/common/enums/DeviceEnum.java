@@ -1,25 +1,24 @@
 package cn.demo.common.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum DeviceEnum {
 
-    ANDROID("Android"),//安卓
-    PC("PC"),//PC
-    IOS("IOS"),//IOS
-    WAP("wap"),//h5
-    WEB("web"),//网站
-    ;
+  /**
+   *
+   */
+  ANDROID("Android"),
+  PC("PC"),
+  IOS("IOS"),
+  WAP("wap"),
+  WEB("web"),
+  ;
 
-    private String type;
+  private String type;
 
-    DeviceEnum(String type) {
-        this.type = type;
-    }
+  DeviceEnum(String type) {
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
+    this.type = type;
+  }
 }

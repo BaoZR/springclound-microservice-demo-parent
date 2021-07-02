@@ -1,0 +1,48 @@
+# 该参数避免服务端无限刷日志，如果刷日志修改该参数
+random: thOt2P7V8Z9uiEC04spxFQLtHVcPCErA
+server:
+  port: 20010
+  servlet:
+    context-path: /api
+spring:
+  cloud:
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowed-origins: "*"
+            allowed-methods: "*"
+            allowed-headers: "*"
+            allow-credentials: true
+      httpclient:
+        websocket:
+          max-frame-payload-length: 655350
+      routes:
+        - id: order
+          uri: lb://lottery-order-server
+          predicates:
+            - Path=/api/order/**
+          filters:
+            - StripPrefix=1
+        - id: member
+          uri: lb://lottery-member-server
+          predicates:
+            - Path=/api/member/**
+          filters:
+            - StripPrefix=1
+
+
+# 白名单
+customize:
+  whites:
+    - /api/system/
+    - /api/category/
+    - /api/member/
+    - .html
+    - .js
+    - .css
+    - /api-docs
+    - /swagger-resources
+    - /webjars/springfox-swagger-ui/

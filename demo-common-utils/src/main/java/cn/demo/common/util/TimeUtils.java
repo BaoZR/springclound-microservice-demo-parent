@@ -1,14 +1,22 @@
-package cn.demo.common.api.utils;
-
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
+package cn.demo.common.util;
 
 import java.text.SimpleDateFormat;
-import java.time.*;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+
+import org.apache.commons.lang3.StringUtils;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Created by IntelliJ IDEA.
@@ -57,6 +65,13 @@ public class TimeUtils {
         }
     }
 
+    public static Long localDateTime2Second(LocalDateTime date){
+       return date.toEpochSecond(ZoneOffset.of("+8"));
+    }
+    public static Long localDateTime2MilliSecond(LocalDateTime date){
+        return date.toInstant(ZoneOffset.of("+8")).toEpochMilli();
+    }
+
     public static String date2String(Date date, DateTimeFormatter formatter) {
         if (date == null) {
             return "";
@@ -72,6 +87,19 @@ public class TimeUtils {
     }
 
     public static String localDateTime2String(LocalDateTime dateTime, DateTimeFormatter formatter) {
+        if (dateTime == null) {
+            return "";
+        } else {
+            try {
+                return dateTime.format(formatter);
+            } catch (Exception var3) {
+                log.error("TimeUtils | localDateTime2String : 解析时间出错", var3);
+                return "";
+            }
+        }
+    }
+
+    public static String localDateT2String(LocalDate dateTime, DateTimeFormatter formatter) {
         if (dateTime == null) {
             return "";
         } else {
@@ -249,6 +277,17 @@ public class TimeUtils {
         return nowTime.isAfter(beginTime) && nowTime.isBefore(endTime) ? true : false;
     }
 
+    public static String getFirstDayOfMonth(String curDate){
+        LocalDate localDate = string2LocalDate(curDate,formatterDD2);
+        LocalDate firstday = LocalDate.of(localDate.getYear(),localDate.getMonth(),1);
+        return localDateT2String(firstday,formatterDD2);
+    }
+
+    public static String getLastDayOfMonth(String curDate){
+        LocalDate localDate = string2LocalDate(curDate,formatterDD2);
+        LocalDate lastDay =localDate.with(TemporalAdjusters.lastDayOfMonth());
+        return localDateT2String(lastDay,formatterDD2);
+    }
 
     public static void main(String[] args) {
 //        System.out.println(TimeUtils.string2LocalDate("20190808", TimeUtils.formatterDD3));

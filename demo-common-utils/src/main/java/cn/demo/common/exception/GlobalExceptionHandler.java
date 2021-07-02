@@ -1,7 +1,12 @@
 package cn.demo.common.exception;
 
+import cn.demo.common.model.base.BaseCode;
 import cn.demo.common.model.pojo.ResponseResult;
+import cn.demo.common.util.LocaleUtils;
 import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,32 +21,55 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Slf4j
 public class GlobalExceptionHandler {
 
-    /**
-     * 统一处理自定义异常BaseException
-     *
-     * @param e
-     * @return
-     * @throws Exception
-     */
-    @ExceptionHandler(value = BaseException.class)
-    @ResponseBody
-    public ResponseResult jsonErrorHandler(BaseException e) throws Exception {
-        return ResponseResult.fail(e.getCode(),e.getMessage());
-    }
+  /**
+   * 统一处理自定义异常BaseException
+   *
+   * @param e
+   * @return
+   * @throws Exception
+   */
+  @ExceptionHandler(value = BaseException.class)
+  @ResponseBody
+  public ResponseResult jsonErrorHandler(BaseException e) throws Exception {
 
-    /**
-     * 未知异常
-     * @param:
-     * @return:
-     * @author: moc
-     * @date: 2019-05-05 13:58
-     */
-    @ExceptionHandler(value = Exception.class)
-    @ResponseBody
-    public ResponseResult exceptionErrorHandler(Exception e) throws Exception {
-        log.error("========Exception msg: ", e);
-        return ResponseResult.fail(-1,e.getMessage(),e.getClass().getName());
-    }
+    return ResponseResult.fail(e.getCode(), e.getMessage());
+  }
+
+  @ExceptionHandler(IllegalArgumentException.class)
+  public ResponseResult IllegalArgumentException(IllegalArgumentException ex) {
+
+    log.error("请求参数异常", ex);
+    return ResponseResult.fail(BaseCode.VALID_ERROR.getCode());
+  }
+
+  /**
+   * 未知异常
+   *
+   * @param:
+   * @return:
+   * @author: moc
+   * @date: 2019-05-05 13:58
+   */
+  @ExceptionHandler(value = Exception.class)
+  @ResponseBody
+  public ResponseResult exceptionErrorHandler(Exception e) throws Exception {
+
+    log.error("========Exception msg: ", e);
+    return ResponseResult.fail(BaseCode.FAIL.getCode());
+  }
+
+  /**
+   * 参数校验统一异常处理
+   */
+  @ExceptionHandler(MethodArgumentNotValidException.class)
+  @ResponseBody
+  public ResponseResult handleBindException(MethodArgumentNotValidException ex) {
+
+    FieldError fieldError = ex.getBindingResult().getFieldError();
+    log.warn("参数校验异常:{}({})", fieldError.getDefaultMessage(), fieldError.getField());
+    return ResponseResult.fail(BaseCode.VALID_ERROR.getCode(), LocaleUtils.getMessage(fieldError.getDefaultMessage()));
+  }
+
 //    //运行时异常
 //    @ExceptionHandler(RuntimeException.class)
 //    public ResponseResult runtimeExceptionHandler(RuntimeException ex) {
@@ -119,5 +147,4 @@ public class GlobalExceptionHandler {
 //    public ResponseResult requestStackOverflow(StackOverflowError ex) {
 //        return ResponseResult.fail(ScheduleStatusConstant.NETWORK_ERROR);
 //    }
-
 }

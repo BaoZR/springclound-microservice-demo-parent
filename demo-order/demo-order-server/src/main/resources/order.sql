@@ -4,8 +4,8 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 -- Table structure for order
 -- ----------------------------
-DROP TABLE IF EXISTS `demo_order`;
-CREATE TABLE `demo_order` (
+DROP TABLE IF EXISTS `order_base`;
+CREATE TABLE `order_base` (
   `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '主键Id',
   `user_id` int(20) DEFAULT NULL COMMENT '用户Id',
   `pay_money` decimal(11,0) DEFAULT NULL COMMENT '付款金额',

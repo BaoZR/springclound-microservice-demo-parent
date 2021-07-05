@@ -22,13 +22,13 @@ public class EchoServiceFallbackFactory implements FallbackFactory<EchoApi> {
             @Override
             public ResponseResult echo1(String str) {
                 log.info("触发熔断，降级处理！", throwable);
-                return ResponseResult.fail(BaseCode.REQUEST_TIME_OUT);
+                return ResponseResult.fail(BaseCode.CALL_TIME);
             }
 
             @Override
             public ResponseResult echo2() {
                 log.info("触发熔断，降级处理！", throwable);
-                return ResponseResult.fail(BaseCode.REQUEST_TIME_OUT);
+                return ResponseResult.fail(BaseCode.CALL_TIME);
             }
         };
 

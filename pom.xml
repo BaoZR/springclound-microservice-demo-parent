@@ -25,7 +25,8 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <lombok.version>1.18.10</lombok.version>
-        <mysql.version>8.0.17</mysql.version>
+<!--        <mysql.version>8.0.17</mysql.version>-->
+        <mysql.version>5.1.47</mysql.version>
         <shiro.version>1.5.0</shiro.version>
 
         <!-- 组件版本关系 https://github.com/alibaba/spring-cloud-alibaba/wiki/%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E -->
@@ -88,11 +89,6 @@
             <!-- mybatis -->
             <dependency>
                 <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus</artifactId>
-                <version>${mybatis.plus.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis.plus.version}</version>
             </dependency>
@@ -102,6 +98,19 @@
                 <version>2.1.2</version>
             </dependency>
 
+            <!--mybatis plus 代码生成器 https://github.com/baomidou/generator-->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-generator</artifactId>
+                <version>3.4.1</version>
+            </dependency>
+
+            <!-- 默认模板引擎 -->
+            <dependency>
+                <groupId>org.apache.velocity</groupId>
+                <artifactId>velocity-engine-core</artifactId>
+                <version>2.3</version>
+            </dependency>
             <!--feign-->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>

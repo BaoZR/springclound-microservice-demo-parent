@@ -1,15 +1,19 @@
 package cn.demo.order.controller;
 
-import cn.demo.order.feign.api.request.OrderReq;
-import cn.demo.order.server.IOrderService;
-import cn.demo.order.server.LockServer;
+import javax.annotation.Resource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import cn.demo.common.model.pojo.ResponseResult;
 import cn.demo.common.util.RedisUtil;
+import cn.demo.order.feign.api.request.OrderReq;
+import cn.demo.order.server.OrderBaseService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.Resource;
 
 /**
  * Created by IntelliJ IDEA.
@@ -22,47 +26,35 @@ import javax.annotation.Resource;
 @RestController
 @RequestMapping("/order")
 public class OrderController {
-    @Autowired
-    private IOrderService iOrderService;
 
-    @Resource
-    private LockServer lockServer;
-    @Resource
-    private RedisUtil redisUtil;
+  @Autowired
+  private OrderBaseService orderBaseService;
 
-    /**
-     * 创建订单
-     */
-    @PostMapping("/create")
-    public ResponseResult create(@RequestBody OrderReq order) {
-        try {
-            iOrderService.createOrder(order);
-        } catch (Exception e) {
-            log.error("create | {}", e);
-            return ResponseResult.fail("创建订单失败");
-        }
-        return ResponseResult.success("");
+  @Resource
+  private RedisUtil redisUtil;
+
+  /**
+   * 创建订单
+   */
+  @PostMapping("/create")
+  public ResponseResult create(@RequestBody OrderReq order) {
+
+    try {
+      orderBaseService.createOrder(order);
+    } catch (Exception e) {
+      log.error("create | {}", e);
+      return ResponseResult.fail("创建订单失败");
     }
-
-    @GetMapping("/lock")
-    public ResponseResult local() throws InterruptedException {
-        lockServer.local();
-        Thread.sleep(300);
-        //lockServer.onlock();
-        return ResponseResult.success("");
-    }
-
-    @GetMapping("/onlock")
-    public ResponseResult onlock() {
-        lockServer.onlock();
-        return ResponseResult.success("");
-    }
+    return ResponseResult.success("");
+  }
 
 
-    @GetMapping("/redis")
-    public ResponseResult redisTest() {
-        redisUtil.set("hello", "hello", 60);
-        Object result = redisUtil.getStr("hello");
-        return ResponseResult.success(result);
-    }
+  @GetMapping("/redis")
+  public ResponseResult redisTest() {
+
+    redisUtil.set("hello", "hello", 60);
+    Object result = redisUtil.getStr("hello");
+    return ResponseResult.success(result);
+  }
+
 }

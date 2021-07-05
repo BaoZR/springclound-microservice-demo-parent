@@ -28,25 +28,25 @@ public class StorageApiFallbackFactory implements FallbackFactory<StorageApi> {
             @Override
             public ResponseResult findById(RequestObject<StorageSelectDTO> requestObject) {
                 log.info("findById熔断！", throwable);
-                return ResponseResult.fail(BaseCode.REQUEST_TIME_OUT);
+                return ResponseResult.fail(BaseCode.CALL_TIME);
             }
 
             @Override
             public ResponseResult insert(RequestObject<Storage> requestObject) {
                 log.info("insert熔断！", throwable);
-                return ResponseResult.fail(BaseCode.REQUEST_TIME_OUT);
+                return ResponseResult.fail(BaseCode.CALL_TIME);
             }
 
             @Override
             public ResponseResult deleteById(RequestObject<Storage> requestObject) {
                 log.info("deleteById熔断！", throwable);
-                return ResponseResult.fail(BaseCode.REQUEST_TIME_OUT);
+                return ResponseResult.fail(BaseCode.CALL_TIME);
             }
 
             @Override
             public ResponseResult update(RequestObject<Storage> requestObject) {
                 log.info("update熔断！", throwable);
-                return ResponseResult.fail(BaseCode.REQUEST_TIME_OUT);
+                return ResponseResult.fail(BaseCode.CALL_TIME);
             }
 
             @Override

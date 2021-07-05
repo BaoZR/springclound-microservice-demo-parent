@@ -14,10 +14,10 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
-      url: jdbc:mysql://127.0.0.1:3306/demo_order?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true
-      username: root
-      password: 'mrMGB7fbDkZ9I5Pp'
-      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://192.168.101.60:3306/demo_order?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true
+      username: cjl
+      password: 'cjl1234'
+      driver-class-name: com.mysql.jdbc.Driver
       # 初始化大小，最小，最大
       initialSize: 5
       # 配置获取连接等待超时的时间
@@ -36,35 +36,35 @@ spring:
       # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
       connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
   redis:
-    database: 6
-    host: 127.0.0.1
+    database: 10
+    host: 192.168.101.60
     port: 6379
-    password: Abc1234
+    #password:
   redission-lock:
     enable: true
   cloud:
     nacos:
       discovery:
-        server-addr: 127.0.0.1:8848
+        server-addr: 192.168.101.60:8848
         #namespace: 82632dc2-fce3-4288-b49e-9d270643df74
-    sentinel:
-      transport:
-        # 取消Sentinel控制台懒加载
-        eager: true
-        # sentinel控制台地址
-        dashboard: 127.0.0.1:8080
-      #nacos配置动态限流规则
-      datasource:
-        # 这边可以配置多个如ds1
-        ds:
-          nacos:
-            # nacos地址
-            server-addr: ${spring.cloud.nacos.discovery.server-addr}
-            dataId: ${spring.application.name}-sentinel
-            groupId: SENTINEL-DATASOURCE
-            # rule-type：表示数据源中规则属于哪种类型，如flow、degrade、param-flow、gw-flow等。
-            rule-type: flow
-            # namespace: ${spring.cloud.nacos.discovery.namespace}
+#    sentinel:
+#      transport:
+#        # 取消Sentinel控制台懒加载
+#        eager: true
+#        # sentinel控制台地址
+#        dashboard: 192.168.101.60:8080
+#      #nacos配置动态限流规则
+#      datasource:
+#        # 这边可以配置多个如ds1
+#        ds:
+#          nacos:
+#            # nacos地址
+#            server-addr: ${spring.cloud.nacos.discovery.server-addr}
+#            dataId: ${spring.application.name}-sentinel
+#            groupId: SENTINEL-DATASOURCE
+#            # rule-type：表示数据源中规则属于哪种类型，如flow、degrade、param-flow、gw-flow等。
+#            rule-type: flow
+#            # namespace: ${spring.cloud.nacos.discovery.namespace}
 
 # feign sentinel 是否开启
 feign:
@@ -74,7 +74,7 @@ feign:
 # nacos 配置中心
 nacos:
   config:
-    server-addr: 127.0.0.1:8848
+    server-addr: 192.168.101.60:8848
     #namespace: xxx
 
 seata:
@@ -86,13 +86,13 @@ seata:
     type: nacos
     nacos:
       group: SEATA_GROUP
-      server-addr: 127.0.0.1:8848
+      server-addr: 192.168.101.60:8848
       #namespace: 82632dc2-fce3-4288-b49e-9d270643df74
   registry:
     type: nacos
     nacos:
       cluster: default
-      server-addr: 127.0.0.1:8848
+      server-addr: 192.168.101.60:8848
       #namespace: 82632dc2-fce3-4288-b49e-9d270643df74
 
 mybatis:

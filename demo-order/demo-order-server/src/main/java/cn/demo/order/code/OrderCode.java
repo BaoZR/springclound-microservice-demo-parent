@@ -10,24 +10,24 @@ import cn.demo.common.model.base.BaseEnum;
  * @Created: 2020-04-17 14:37
  */
 public enum OrderCode implements BaseEnum {
-    ORDER_ID_NOT_FOUND(30000, "订单号不存在");
+    ORDER_ID_NOT_FOUND("A30000", "订单号不存在");
 
     /**
      * 状态码
      */
-    private Integer code;
+    private String code;
     /**
      * 响应信息
      */
     private String message;
 
-    OrderCode(Integer code, String message) {
+    OrderCode(String code, String message) {
         this.code = code;
         this.message = message;
     }
 
     @Override
-    public Integer getCode() {
+    public String getCode() {
         return null;
     }
 

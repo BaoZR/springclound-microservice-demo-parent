@@ -1,158 +1,219 @@
-[TOC]
+- [1. 目录介绍](#1-----)
+- [2. 新建数据库表`seata`](#2--------seata-)
+    * [3. 配置推送到`nacos配置中心](#3-------nacos----)
+    * [3.1 对文件`config-center/config.txt`中的`store`部分进行配置，其他配置默认即可](#31-----config-center-configtxt----store----------------)
+    * [3.2 执行脚本](#32-----)
+- [4. docker部署seata-server](#4-docker--seata-server)
+    * [4.1 修改配置文件b](#41-------b)
+    * [4.2 docker方式启动`seata-server`](#42-docker-----seata-server-)
+    * [4.3 检查服务](#43-----)
 
-# 1. client目录
 
-> 存放用于客户端的配置和SQL
 
-- at: AT模式下的 `undo_log` 建表语句
-- conf: 客户端的配置文件
-- saga: SAGA 模式下所需表的建表语句
-- spring: SpringBoot 应用支持的配置文件
+## 1. 目录介绍
 
-> demo主要使用AT模式,所以，只需要执行at目录下的sql，（目前不支持最新的mysql8.0的版本，所以只能用搭建的mysql5.7来测试）
+* **`client`**:  客户端数据配置或DB文件；
+* **`server`**： `seata server` DB文件；
+* **`config`**:   `docker-compose`需要用的配置文件
+* **`config-center`**： 用`nacos-config.py` 或者`nacos-config.sh`脚本把配置文件**`config.txt`**： 中的配置推送到nacos配置中心
 
-* 创建数据库`seata`和表`undo_log`, 等会配置文件需要使用
-```$xslt
-➜  mysql-5.7 mysql -h127.0.0.1  -uadmin -P3337 -p
-Enter password:
-Welcome to the MySQL monitor.  Commands end with ; or \g.
-Your MySQL connection id is 70
-Server version: 5.7.31 MySQL Community Server (GPL)
 
-Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
 
-Oracle is a registered trademark of Oracle Corporation and/or its
-affiliates. Other names may be trademarks of their respective
-owners.
+## 2. 新建数据库表`seata`
 
-Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+> 测试发现目前`seata server`不支持8.0的数据库，只能使用mysql-5.x ，测试使用的是版本是5.7
 
-mysql> show databases;
-+--------------------+
-| Database           |
-+--------------------+
-| information_schema |
-| mysql              |
-| performance_schema |
-| sys                |
-+--------------------+
-4 rows in set (0.03 sec)
 
-mysql> create database seata;
-Query OK, 1 row affected (0.01 sec)
 
-mysql> use seata;
-Database changed
-mysql> CREATE TABLE IF NOT EXISTS `undo_log`
-    -> (
-    ->     `id`            BIGINT(20)   NOT NULL AUTO_INCREMENT COMMENT 'increment id',
-    ->     `branch_id`     BIGINT(20)   NOT NULL COMMENT 'branch transaction id',
-    ->     `xid`           VARCHAR(100) NOT NULL COMMENT 'global transaction id',
-    ->     `context`       VARCHAR(128) NOT NULL COMMENT 'undo_log context,such as serialization',
-    ->     `rollback_info` LONGBLOB     NOT NULL COMMENT 'rollback info',
-    ->     `log_status`    INT(11)      NOT NULL COMMENT '0:normal status,1:defense status',
-    ->     `log_created`   DATETIME     NOT NULL COMMENT 'create datetime',
-    ->     `log_modified`  DATETIME     NOT NULL COMMENT 'modify datetime',
-    ->     PRIMARY KEY (`id`),
-    ->     UNIQUE KEY `ux_undo_log` (`xid`, `branch_id`)
-    -> ) ENGINE = InnoDB
-    ->   AUTO_INCREMENT = 1
-    ->   DEFAULT CHARSET = utf8 COMMENT ='AT transaction mode undo table';
-Query OK, 0 rows affected (0.04 sec)
+* at模式下执行的sql 文件路径：`client/at-db`
+* server db 存储文件路径：`server/db/mysql`
 
-mysql> show tables;
-+-----------------+
-| Tables_in_seata |
-+-----------------+
-| undo_log        |
-+-----------------+
-1 row in set (0.00 sec)
 ```
 
-# 2. server目录
-- db: server 侧的保存模式为 `db` 时所需表的建表语句
+create database seata;
 
-*  存放server侧所需SQL， 按上一步的操作，继续创建3个表`global_table`,`branch_table`, `lock_table`
+# at模式下执行的sql
+CREATE TABLE IF NOT EXISTS `undo_log`
+(
+    `id`            BIGINT(20)   NOT NULL AUTO_INCREMENT COMMENT 'increment id',
+    `branch_id`     BIGINT(20)   NOT NULL COMMENT 'branch transaction id',
+    `xid`           VARCHAR(100) NOT NULL COMMENT 'global transaction id',
+    `context`       VARCHAR(128) NOT NULL COMMENT 'undo_log context,such as serialization',
+    `rollback_info` LONGBLOB     NOT NULL COMMENT 'rollback info',
+    `log_status`    INT(11)      NOT NULL COMMENT '0:normal status,1:defense status',
+    `log_created`   DATETIME     NOT NULL COMMENT 'create datetime',
+    `log_modified`  DATETIME     NOT NULL COMMENT 'modify datetime',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `ux_undo_log` (`xid`, `branch_id`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 1
+  DEFAULT CHARSET = utf8 COMMENT ='AT transaction mode undo table';
+  
 
-最终的表如下：
-```$xslt
-mysql> show tables;                                                                                                                                                                                                                           +-----------------+
-| Tables_in_seata |
-+-----------------+
-| branch_table    |
-| global_table    |
-| lock_table      |
-| undo_log        |
-+-----------------+
+
+# server db 模式下存储的数据表
+CREATE TABLE IF NOT EXISTS `global_table`
+(
+    `xid`                       VARCHAR(128) NOT NULL,
+    `transaction_id`            BIGINT,
+    `status`                    TINYINT      NOT NULL,
+    `application_id`            VARCHAR(32),
+    `transaction_service_group` VARCHAR(32),
+    `transaction_name`          VARCHAR(128),
+    `timeout`                   INT,
+    `begin_time`                BIGINT,
+    `application_data`          VARCHAR(2000),
+    `gmt_create`                DATETIME,
+    `gmt_modified`              DATETIME,
+    PRIMARY KEY (`xid`),
+    KEY `idx_gmt_modified_status` (`gmt_modified`, `status`),
+    KEY `idx_transaction_id` (`transaction_id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
+
+-- the table to store BranchSession data
+CREATE TABLE IF NOT EXISTS `branch_table`
+(
+    `branch_id`         BIGINT       NOT NULL,
+    `xid`               VARCHAR(128) NOT NULL,
+    `transaction_id`    BIGINT,
+    `resource_group_id` VARCHAR(32),
+    `resource_id`       VARCHAR(256),
+    `branch_type`       VARCHAR(8),
+    `status`            TINYINT,
+    `client_id`         VARCHAR(64),
+    `application_data`  VARCHAR(2000),
+    `gmt_create`        DATETIME(6),
+    `gmt_modified`      DATETIME(6),
+    PRIMARY KEY (`branch_id`),
+    KEY `idx_xid` (`xid`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
+
+-- the table to store lock data
+CREATE TABLE IF NOT EXISTS `lock_table`
+(
+    `row_key`        VARCHAR(128) NOT NULL,
+    `xid`            VARCHAR(96),
+    `transaction_id` BIGINT,
+    `branch_id`      BIGINT       NOT NULL,
+    `resource_id`    VARCHAR(256),
+    `table_name`     VARCHAR(32),
+    `pk`             VARCHAR(36),
+    `gmt_create`     DATETIME,
+    `gmt_modified`   DATETIME,
+    PRIMARY KEY (`row_key`),
+    KEY `idx_branch_id` (`branch_id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
+
 ```
 
-# 3. config-center目录
-
-> 用于存放各种配置中心的初始化脚本，执行时都会读取 `config.txt`配置文件，并写入配置中心
-
-- nacos: 用于向 Nacos 中添加配置，(这个是我们domo的主要配置方式)
-- zk: 用于向 Zookeeper 中添加配置，脚本依赖 Zookeeper 的相关脚本，需要手动下载；ZooKeeper相关的配置可以写在 `zk-params.txt` 中，也可以在执行的时候输入
-- apollo: 向 Apollo 中添加配置，Apollo 的地址端口等可以写在 `apollo-params.txt`，也可以在执行的时候输入
-- etcd3: 用于向 Etcd3 中添加配置
-- consul: 用于向 consul 中添加配置
 
 
-# 4. docker部署seata-server
-> 通过nacos的配置中心， 注册中心来完成
+### 3. 配置推送到`nacos配置中心
 
-## 1. 进入`/config/registry.conf`， 修改配置文件
- > 主要配置nacos, seata 向nacos注册
+### 3.1 对文件`config-center/config.txt`中的`store`部分进行配置，其他配置默认即可
 
-## 2. 进入 `/server/db`, 创建对应的mysql数据库表
-> 测试发现，docker部署seata-server，目前还不支持8.0.X的数据库，目前主要主持5.7
-> 本地测试，用docker部署，选择的是5.7的版本的数据库
-> 创建过程的，user, password, db 会在下一步用到；
-
-## 3. 进入`/config-center` ,修改 config.txt 文件
-
-> 如果是DB模式，主要配置如下字段：
-
-```$xslt
+```
 store.mode=db
 store.db.dbType=mysql
 store.db.datasource=druid
 store.db.driverClassName=com.mysql.jdbc.Driver
-store.db.url=jdbc:mysql://127.0.0.1:3337/seata?useUnicode=true
-store.db.user=admin
-store.db.password=admin123
+store.db.url=jdbc:mysql://192.168.101.60:3306/seata?useUnicode=true
+store.db.user=cjl
+store.db.password=cjl1234
+store.db.minConn=1
+store.db.maxConn=3
+store.db.globalTable=global_table
+store.db.branchTable=branch_table
+store.db.queryLimit=100
+store.db.lockTable=lock_table
 ```
 
+### 3.2 执行脚本
 
-## 4. 进入`/config-center/nacos`, 执行脚本，向nacos注册配置
-
-> `cd config-center/nacos`, 两种方式执行一次即可
-
-* 方式1： 执行shell脚本
-```$bash
-# sh nacos-config.sh -h 127.0.0.1 -p 8848 -g SEATA_GROUP -t 82632dc2-fce3-4288-b49e-9d270643df74
-sh nacos-config.sh -h 127.0.0.1 -p 8848 -g SEATA_GROUP
-```
-参数介绍:
-
-* -h: host, nacos的服务ip地址
-* -p: 端口号，nacos为 8848
-* -g: 配置组，'SEATA_GROUP'
-* -t:  对于nacos来说，就是命名空间
-* 方式2： 执行python脚本
-
-脚本执行完毕，进入nacos配置中心查看，是否导入成功，如下图所示，表示导入成功，
-
-> 注意： 如果密码有特殊字符的时候，通过脚本配置，可能有截断，导致密码不全，启动seata-server自然报错，建议登录nacos
-> 查看配置中心如下字段是否正确，主要是`store.db.password`是否正确，nacos支持模糊查询，如`store.db.*`；
+> * 任意执行一个
+>* 参数介绍:
 >
-![nacos配置列表.png](https://i.loli.net/2020/09/14/5IzNysY9PBwuiJE.png)
+> ```
+> 
+> * -h: host, nacos的服务ip地址
+> * -p: 端口号，nacos为 8848
+> * -g: 配置组，'SEATA_GROUP'
+> * -t:  对于nacos来说，就是命名空间
+> 
+> 脚本执行完毕，进入nacos配置中心查看，是否导入成功，如下图所示，表示导入成功，
+> ```
+> * 注意： 如果密码有特殊字符的时候，通过脚本配置，可能有截断，导致密码不全，启动seata-server自然报错，建议登录nacos
+    >   查看配置中心如下字段是否正确，主要是`store.db.password`是否正确，nacos支持模糊查询，如`store.db.*`；
 
-```$Python
+
+
+* shell脚本
+
+  > 进入`seata-server/config-center/nacos`下执行,由于我的nacos环境是`http://192.168.101.60/`
+
+  ```
+  # 如果有命名空间，指定空间，没有不需要指定
+  # sh nacos-config.sh -h 127.0.0.1 -p 8848 -g SEATA_GROUP -t 82632dc2-fce3-4288-b49e-9d270643df74
+  sh nacos-config.sh -h 192.168.101.60 -p 8848 -g SEATA_GROUP
+  ```
+
+* Python 脚本
+
+```
 python nacos-config.py localhost:8848
 ```
 
-#
 
 
-#### 参考
-[配置脚本](https://github.com/seata/seata/tree/develop/script)
+> * 执行完上面的脚本，去nacos配置中心，检查，会有如下配置;
+>
+> * 注意： 如果密码有特殊字符的时候，通过脚本配置，可能有截断，导致密码不全，启动seata-server自然报错，建议登录nacos
+    >   查看配置中心如下字段是否正确，主要是`store.db.password`是否正确，nacos支持模糊查询，如`store.db.*`；
+>
+>
+
+![](https://gitee.com/mixbe/blog-image/raw/master/img/WX20210705-111210@2x.png)
+
+
+
+
+
+## 4. docker部署seata-server
+
+### 4.1 修改配置文件b
+
+> `config/registry.conf`
+
+* 注册中心`type`： nacos
+* serverAddr: 配置中心ip
+* group： `SEATA_GROUP`
+
+
+
+### 4.2 docker方式启动`seata-server`
+
+把配置好的文件拷贝到服务器某个目录，比如如下:
+
+```
+seata-server/
+├── config
+│   └── registry.conf
+├── docker-compose.yml
+```
+
+执行docker启动命令：
+
+```
+docker-compose up -d
+```
+
+### 4.3 检查服务
+
+进入到`nacos`服务注册中心检查是否成功注册，如果注册成功，那么恭喜💐，基础服务搭建好了
+
+![](https://gitee.com/mixbe/blog-image/raw/master/img/WX20210705-112856@2x.png)
+
+

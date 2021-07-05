@@ -2,10 +2,11 @@
 
 > docker-compose 镜像文件, 如果没有物理部署，可以使用docker部署策略，已经安装的，可以忽略
 
-* mysql:5.7
-* mysql:5.8
+* [mysql:5.7 安装方式(可选)](./mysql-5.7-docker/README.md)
+* [mysql:8.0 安装方式(可选)](./mysql-8.0-docker/)
 * redis
-* seata
+* [nacos 安装方式](./nacos/README.md)
+* [seata](./seata-server/README.md)
 
 # 配置镜像源
 

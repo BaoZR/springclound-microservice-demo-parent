@@ -10,35 +10,32 @@ import cn.demo.common.model.base.BaseEnum;
  */
 public enum StorageCode implements BaseEnum {
 
-    /**
-     * 测试
-     */
-    TEST(666,"测试"),
-    FIND_FAIL(777,"查询失败！"),
-    ADD_SUCCESS(888,"添加成功！"),
-    CURRENT_LIMITING(999,"服务器繁忙（接口限流）"),
-    FUSING(998,"服务器繁忙（熔断降级）"),
-    ;
-    /**
-     * 状态码
-     */
-    private Integer code;
-    /**
-     * 响应信息
-     */
-    private String message;
+  STORAGE_ID_NOT_FOUND("B30000", "仓库号不存在");;
 
-    StorageCode(Integer code, String message) {
-        this.code = code;
-        this.message = message;
-    }
-    @Override
-    public Integer getCode() {
-        return code;
-    }
+  /**
+   * 状态码
+   */
+  private String code;
+  /**
+   * 响应信息
+   */
+  private String message;
 
-    @Override
-    public String getMessage() {
-        return message;
-    }
+  StorageCode(String code, String message) {
+
+    this.code = code;
+    this.message = message;
+  }
+
+  @Override
+  public String getCode() {
+
+    return code;
+  }
+
+  @Override
+  public String getMessage() {
+
+    return message;
+  }
 }

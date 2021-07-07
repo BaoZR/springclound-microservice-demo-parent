@@ -16,10 +16,13 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  */
 @EnableDiscoveryClient
 @SpringBootApplication(scanBasePackages = {"cn.demo"}, exclude = DataSourceAutoConfiguration.class)
+@MapperScan(value = {"cn.demo.storage.mapper"})
 @EnableFeignClients(basePackages = "cn.demo.storage")
-@MapperScan("cn.demo.storage.dao")
 public class StorageApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(StorageApplication.class, args);
-    }
+
+  public static void main(String[] args) {
+
+    SpringApplication.run(StorageApplication.class, args);
+  }
+
 }

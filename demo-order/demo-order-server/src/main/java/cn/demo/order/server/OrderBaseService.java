@@ -9,10 +9,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * 订单表 服务类
  * </p>
  *
- * @author 
+ * @author
  * @since 2021-07-05
  */
 public interface OrderBaseService extends IService<OrderBaseEntity> {
-  void createOrder(OrderReq order) throws Exception ;
+
+  void createOrder(OrderReq order) throws Exception;
 
 }

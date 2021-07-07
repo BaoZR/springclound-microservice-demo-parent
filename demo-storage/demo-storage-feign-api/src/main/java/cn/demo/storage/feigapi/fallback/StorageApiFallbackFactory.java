@@ -1,14 +1,15 @@
 package cn.demo.storage.feigapi.fallback;
 
-import cn.demo.storage.feigapi.dto.StorageSelectDTO;
-import cn.demo.storage.feigapi.entity.Storage;
+import org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoProperties.Storage;
+import org.springframework.stereotype.Component;
+
 import cn.demo.common.model.base.BaseCode;
 import cn.demo.common.model.pojo.RequestObject;
 import cn.demo.common.model.pojo.ResponseResult;
 import cn.demo.storage.feigapi.api.StorageApi;
+import cn.demo.storage.feigapi.dto.StorageSelectDTO;
 import feign.hystrix.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 
 /**
  * @version 1.0
@@ -54,6 +55,7 @@ public class StorageApiFallbackFactory implements FallbackFactory<StorageApi> {
                 log.info("findPage熔断！", throwable);
                 return ResponseResult.fail("服务熔断降级！");
             }
+
         };
     }
 }

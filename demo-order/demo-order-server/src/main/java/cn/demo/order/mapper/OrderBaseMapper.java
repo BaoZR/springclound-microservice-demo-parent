@@ -1,4 +1,4 @@
-package cn.demo.order.feign.api.mapper;
+package cn.demo.order.mapper;
 
 import cn.demo.order.feign.api.entity.OrderBaseEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;

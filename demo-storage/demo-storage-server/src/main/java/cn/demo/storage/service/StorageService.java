@@ -13,4 +13,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface StorageService extends IService<StorageEntity> {
 
+  /**
+   * 减库存操作
+   * @param productId
+   * @param count
+   */
+  void deduct(Integer productId, int count);
+
 }

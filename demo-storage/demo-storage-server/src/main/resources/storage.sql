@@ -9,7 +9,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `storage`;
 CREATE TABLE `storage` (
   `id` int(20) NOT NULL COMMENT '主键',
-  `storage_id` int(11) DEFAULT NULL COMMENT '商品Id',
+  `product_id` int(11) DEFAULT NULL COMMENT '商品Id',
   `price` decimal(11,0) DEFAULT NULL COMMENT '价格',
   `count` int(11) DEFAULT NULL COMMENT '库存数量',
   PRIMARY KEY (`id`) USING BTREE

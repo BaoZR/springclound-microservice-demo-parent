@@ -1,14 +1,13 @@
 package cn.demo.storage.feigapi.api;
 
-import cn.demo.common.model.pojo.RequestObject;
-import cn.demo.common.model.pojo.ResponseResult;
-import cn.demo.storage.feigapi.dto.StorageSelectDTO;
-
-import org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoProperties.Storage;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import cn.demo.common.model.pojo.ResponseResult;
+import cn.demo.storage.feigapi.dto.StorageSelectDTO;
+import cn.demo.storage.feigapi.entity.StorageEntity;
 
 /**
  * @version 1.0
@@ -25,46 +24,46 @@ public interface StorageApi {
   /**
    * 根据ID查询
    *
-   * @param requestObject
+   * @param data
    * @return
    */
   @RequestMapping(path = "/findById", method = RequestMethod.POST)
-  ResponseResult findById(@RequestBody RequestObject<StorageSelectDTO> requestObject);
+  ResponseResult findById(@RequestBody StorageSelectDTO data);
 
   /**
    * 添加
    *
-   * @param requestObject
+   * @param data
    * @return
    */
   @RequestMapping(path = "/insert", method = RequestMethod.POST)
-  ResponseResult insert(@RequestBody RequestObject<Storage> requestObject);
+  ResponseResult insert(@RequestBody StorageEntity data);
 
   /**
    * 删除
    *
-   * @param requestObject
+   * @param
    * @return
    */
   @RequestMapping(path = "/deleteById", method = RequestMethod.POST)
-  ResponseResult deleteById(@RequestBody RequestObject<Storage> requestObject);
+  ResponseResult deleteById(@RequestBody Integer id);
 
   /**
    * 修改
    *
-   * @param requestObject
+   * @param data
    * @return
    */
   @RequestMapping(path = "/update", method = RequestMethod.POST)
-  ResponseResult update(@RequestBody RequestObject<Storage> requestObject);
+  ResponseResult update(@RequestBody StorageEntity data);
 
   /**
    * 分页查询
    *
-   * @param requestObject
+   * @param data
    * @return
    */
   @RequestMapping(path = "/findPage", method = RequestMethod.POST)
-  ResponseResult findPage(@RequestBody RequestObject<StorageSelectDTO> requestObject);
+  ResponseResult findPage(@RequestBody StorageSelectDTO data);
 
 }

@@ -107,6 +107,8 @@
 
 
 ## 参考
-1. 《阿里巴巴开发手册》(嵩山版)
-2. 
+《阿里巴巴开发手册》(嵩山版)
+ [Github seata](https://github.com/seata/seata)
+ [seata-samples](https://github.com/seata/seata-samples)
+ [setat](https://nacos.io/zh-cn/)
 

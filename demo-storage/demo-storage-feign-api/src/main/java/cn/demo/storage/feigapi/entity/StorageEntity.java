@@ -32,8 +32,8 @@ public class StorageEntity implements Serializable {
     /**
      * 商品Id
      */
-    @TableField("storage_id")
-    private Integer storageId;
+    @TableField("product_id")
+    private Integer productId;
 
     /**
      * 价格

@@ -2,6 +2,7 @@ package cn.demo.gateway.config;
 
 import cn.demo.gateway.handler.SentinelBlockExceptionHandler;
 import com.alibaba.csp.sentinel.adapter.gateway.sc.SentinelGatewayFilter;
+
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.context.annotation.Bean;
@@ -22,34 +23,38 @@ import java.util.List;
  */
 @Configuration
 public class GatewayConfiguration {
-    private final List<ViewResolver> viewResolvers;
-    private final ServerCodecConfigurer serverCodecConfigurer;
 
-    public GatewayConfiguration(ObjectProvider<List<ViewResolver>> viewResolversProvider,
-                                ServerCodecConfigurer serverCodecConfigurer) {
-        this.viewResolvers = viewResolversProvider.getIfAvailable(Collections::emptyList);
-        this.serverCodecConfigurer = serverCodecConfigurer;
-    }
+  private final List<ViewResolver> viewResolvers;
+  private final ServerCodecConfigurer serverCodecConfigurer;
 
-    /**
-     * 限流后异常处理
-     * @return
-     */
-    @Bean
-    @Order(Ordered.HIGHEST_PRECEDENCE)
-    public SentinelBlockExceptionHandler getSentinelBlockExceptionHandler() {
-        return new SentinelBlockExceptionHandler(viewResolvers, serverCodecConfigurer);
-    }
+  public GatewayConfiguration(ObjectProvider<List<ViewResolver>> viewResolversProvider,
+                              ServerCodecConfigurer serverCodecConfigurer) {
 
-    /**
-     * 配置SentinelGatewayFilter
-     * @return
-     */
-    @Bean
-    @Order(-1)
-    public GlobalFilter getGlobalFilter() {
-        return new SentinelGatewayFilter();
-    }
+    this.viewResolvers = viewResolversProvider.getIfAvailable(Collections::emptyList);
+    this.serverCodecConfigurer = serverCodecConfigurer;
+  }
+
+  /**
+   * 限流后异常处理
+   * @return
+   */
+  @Bean
+  @Order(Ordered.HIGHEST_PRECEDENCE)
+  public SentinelBlockExceptionHandler getSentinelBlockExceptionHandler() {
+
+    return new SentinelBlockExceptionHandler(viewResolvers, serverCodecConfigurer);
+  }
+
+  /**
+   * 配置SentinelGatewayFilter
+   * @return
+   */
+  @Bean
+  @Order(-1)
+  public GlobalFilter getGlobalFilter() {
+
+    return new SentinelGatewayFilter();
+  }
 
 //    @PostConstruct
 //    public void doInit() {
@@ -90,7 +95,8 @@ public class GatewayConfiguration {
 //     * burst：应对突发请求时额外允许的请求数目（目前仅对参数限流生效）。
 //     * maxQueueingTimeoutMs：匀速排队模式下的最长排队时间，单位是毫秒，仅在匀速排队模式下生效。
 //     * paramItem：参数限流配置。若不提供，则代表不针对参数进行限流，该网关规则将会被转换成普通流控规则；否则会转换成热点规则。其中的字段：
-//     * parseStrategy：从请求中提取参数的策略，目前支持提取来源 IP（PARAM_PARSE_STRATEGY_CLIENT_IP）、Host（PARAM_PARSE_STRATEGY_HOST）、任意 Header（PARAM_PARSE_STRATEGY_HEADER）和任意 URL 参数（PARAM_PARSE_STRATEGY_URL_PARAM）四种模式。
+//     * parseStrategy：从请求中提取参数的策略，目前支持提取来源 IP（PARAM_PARSE_STRATEGY_CLIENT_IP）、Host（PARAM_PARSE_STRATEGY_HOST）、任意
+//     Header（PARAM_PARSE_STRATEGY_HEADER）和任意 URL 参数（PARAM_PARSE_STRATEGY_URL_PARAM）四种模式。
 //     * fieldName：若提取策略选择 Header 模式或 URL 参数模式，则需要指定对应的 header 名称或 URL 参数名称。
 //     * pattern 和 matchStrategy：为后续参数匹配特性预留，目前未实现。
 //     * 用户可以通过 GatewayRuleManager.loadRules(rules)手动加载网关规则，或通过 GatewayRuleManager.register2Property(property)注册动态规则源动态推送（推荐方式）。

@@ -16,7 +16,7 @@ import cn.demo.common.model.pojo.ResponseResult;
 @FeignClient(
     path = "/feignApi/storage",
     value = "demo-storage",
-    url = "${feign-api.storage.url}")
+    url = "${feign-api.storage.url:}")
 public interface StorageApi {
 
   /**

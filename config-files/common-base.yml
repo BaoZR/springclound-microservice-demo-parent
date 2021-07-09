@@ -13,17 +13,13 @@ spring:
     multipart:
       max-file-size: 100MB
       max-request-size: 100MB
+
 pagehelper:
   helperDialect: mysql
   reasonable: true
   supportMethodsArguments: true
   params: count=countSql
-ribbon:
-  ReadTimeout: 15000
-  ConnectTimeout: 15000
-  MaxAutoRetries: 1
-  MaxAutoRetriesNextServer: 1
-  OkToRetryOnAllOperations: false
+
 feign:
   client:
     config:
@@ -32,20 +28,20 @@ feign:
         read-timeout: 10000
   sentinel:
     enabled: true
+
+mybatis-plus:
+  mapper-locations: classpath*:xml/*.xml
+  global-config:
+    db-config:
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  configuration:
+    # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
 feign-api:
-  category:
-    url: ''
-  system:
-    url: ''
-  member:
-    url: ''
   order:
     url: ''
-jwt:
-  secret: aH257gS2c[M<+dgG8uy3iQozd3r+ixkz[geek.lottery]
-  tokenHeader: Authorization
-  tokenPrefix: Sans-
-  expiration: 14
-  antMatchers: /index/**,/login/**,/favicon.ico
-swagger:
-  enabled: false
+  storage:
+    url: ''

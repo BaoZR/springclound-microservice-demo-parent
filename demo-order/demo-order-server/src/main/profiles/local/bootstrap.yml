@@ -1,0 +1,43 @@
+server:
+  port: 40000
+  servlet:
+    session:
+      timeout: 2000s
+
+nacos:
+  addr: 192.168.101.60:8848
+  # namespace: 82632dc2-fce3-4288-b49e-9d270643df74
+spring:
+  application:
+    name: demo-order
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${nacos.addr}
+        # namespace: ${nacos.namespace}
+      config:
+        server-addr: ${nacos.addr}
+        file-extension: yml
+        # namespace: ${nacos.namespace}
+        extension-configs:
+          - data-id: common-base.yml
+            refresh: true
+seata:
+  enabled: true
+  tx-service-group: my_test_tx_group
+  enable-auto-data-source-proxy: true
+  application-id: ${spring.application.name}
+  config:
+    type: nacos
+    nacos:
+      group: SEATA_GROUP
+      server-addr: ${nacos.addr}
+      # namespace: ${nacos.namespace}
+  registry:
+    type: nacos
+    nacos:
+      cluster: default
+      server-addr: ${nacos.addr}
+      # namespace: ${nacos.namespace}

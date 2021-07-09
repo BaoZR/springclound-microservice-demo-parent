@@ -1,9 +1,9 @@
 nacos:
-  addr: 127.0.0.1:8848
+  addr: 192.168.101.60:8848
   namespace:
 spring:
   application:
-    name: lottery-gateway-server
+    name: demo-gateway-server
   main:
     allow-bean-definition-overriding: true
   cloud:
@@ -18,18 +18,3 @@ spring:
         extension-configs:
           - data-id: common-base.yml
             refresh: true
-          - data-id: common-active.yml
-            refresh: true
-#    sentinel:
-#      eager: true
-#      transport:
-#        dashboard: 127.0.0.1:8080
-#        port: 8080
-#      datasource:
-#        ds:
-#          nacos:
-#            server-addr: ${nacos.addr}
-#            namespace: ${nacos.namespace}
-#            dataId: order-sentinel.json
-#            data-type: json
-#            rule-type: flow

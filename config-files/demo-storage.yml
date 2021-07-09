@@ -39,3 +39,8 @@ spring:
   redission-lock:
     enable: true
 
+# 测试配置中心
+# 如果要用nacos配置中心获取动态字段，使用使用注解：@R  efreshScope
+storage:
+  param1: 0
+

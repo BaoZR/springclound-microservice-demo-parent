@@ -1,6 +1,9 @@
 package cn.demo.storage.controller;
 
 import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,10 +14,20 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Slf4j
 @RestController
+@RefreshScope
 public class TestController {
-    @GetMapping("/dynamic")
-    public String dynamic() {
-        return "Hello Dynamic Rules";
-    }
+
+  /**
+   * 如果要用nacos配置中心获取动态字段，使用使用注解：@RefreshScope
+   */
+  @Value("${storage.param1}")
+  private String param;
+
+
+  @GetMapping("/getparam")
+  public String dynamic() {
+
+    return param;
+  }
 
 }

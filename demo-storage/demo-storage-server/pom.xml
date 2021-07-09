@@ -81,12 +81,6 @@
             <artifactId>druid-spring-boot-starter</artifactId>
         </dependency>
 
-        <!--        <dependency>-->
-        <!--            <groupId>com.alibaba.csp</groupId>-->
-        <!--            <artifactId>sentinel-web-servlet</artifactId>-->
-        <!--            <version>1.7.2</version>-->
-        <!--        </dependency>-->
-
         <!-- Spring Cloud Seata -->
         <!-- https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-starter-alibaba-seata -->
         <dependency>

@@ -1,0 +1,51 @@
+random: thOt2P7V8Z9uiEC04spxFQLtHVcPCErA
+spring:
+  messages:
+    basename: file:/application/lottery/i18n/messages
+    lgPath: /application/lottery/i18n
+    encoding: UTF-8
+    locale: zh_CN,en_US
+    header: language
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+ribbon:
+  ReadTimeout: 15000
+  ConnectTimeout: 15000
+  MaxAutoRetries: 1
+  MaxAutoRetriesNextServer: 1
+  OkToRetryOnAllOperations: false
+feign:
+  client:
+    config:
+      default:
+        connect-timeout: 10000
+        read-timeout: 10000
+  sentinel:
+    enabled: true
+feign-api:
+  category:
+    url: ''
+  system:
+    url: ''
+  member:
+    url: ''
+  order:
+    url: ''
+jwt:
+  secret: aH257gS2c[M<+dgG8uy3iQozd3r+ixkz[geek.lottery]
+  tokenHeader: Authorization
+  tokenPrefix: Sans-
+  expiration: 14
+  antMatchers: /index/**,/login/**,/favicon.ico
+swagger:
+  enabled: false

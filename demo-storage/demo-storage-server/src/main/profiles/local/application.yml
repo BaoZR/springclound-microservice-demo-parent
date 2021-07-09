@@ -52,24 +52,24 @@ spring:
       discovery:
         server-addr: 192.168.101.60:8848
         # namespace: 82632dc2-fce3-4288-b49e-9d270643df74
-    sentinel:
-      transport:
-        # 取消Sentinel控制台懒加载
-        eager: true
-        # sentinel控制台地址
-        dashboard: 192.168.101.60:8080
-      #nacos配置动态限流规则
-      datasource:
-        # 这边可以配置多个如ds1
-        ds1:
-          nacos:
-            # nacos地址
-            server-addr: ${spring.cloud.nacos.discovery.server-addr}
-            data-id: ${spring.application.name}-sentinel
-            group-id: SENTINEL-DATASOURCE
-            # rule-type：表示数据源中规则属于哪种类型，如flow、degrade、param-flow、gw-flow等。
-            rule-type: flow
-            # namespace: ${spring.cloud.nacos.discovery.namespace}
+#    sentinel:
+#      transport:
+#        # 取消Sentinel控制台懒加载
+#        eager: true
+#        # sentinel控制台地址
+#        dashboard: 192.168.101.60:8080
+#      #nacos配置动态限流规则
+#      datasource:
+#        # 这边可以配置多个如ds1
+#        ds1:
+#          nacos:
+#            # nacos地址
+#            server-addr: ${spring.cloud.nacos.discovery.server-addr}
+#            data-id: ${spring.application.name}-sentinel
+#            group-id: SENTINEL-DATASOURCE
+#            # rule-type：表示数据源中规则属于哪种类型，如flow、degrade、param-flow、gw-flow等。
+#            rule-type: flow
+#            # namespace: ${spring.cloud.nacos.discovery.namespace}
 
 # feign打开sentinel支持
 feign:
@@ -121,11 +121,6 @@ mybatis-plus:
     # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
-
-#ribbon的超时时间, 防止feign调用超时 ribbon 的超时时间必须小于熔断设置的超时时间
-#ribbon:
-#  ReadTimeout: 15000
-#  ConnectTimeout: 15000
-#  MaxAutoRetries: 1 #同一台实例最大重试次数,不包括首次调用
-#  MaxAutoRetriesNextServer: 1 #重试负载均衡其他的实例最大重试次数,不包括首次调用
-#  OkToRetryOnAllOperations: false  #是否所有操作都重试
+feign-api:
+  storage:
+    url: ''

@@ -25,6 +25,7 @@ public class RedisLockUtil {
 
   @PostConstruct
   private void init() {
+
     locker = lk;
   }
 
@@ -34,6 +35,7 @@ public class RedisLockUtil {
    * @param lockKey
    */
   public static void lock(String lockKey) {
+
     locker.lock(lockKey);
   }
 
@@ -43,6 +45,7 @@ public class RedisLockUtil {
    * @param lockKey
    */
   public static void unlock(String lockKey) {
+
     try {
       locker.unlock(lockKey);
     } catch (Exception e) {
@@ -57,6 +60,7 @@ public class RedisLockUtil {
    * @param timeout
    */
   public static void lock(String lockKey, int timeout) {
+
     locker.lock(lockKey, timeout);
   }
 
@@ -68,6 +72,7 @@ public class RedisLockUtil {
    * @param timeout
    */
   public static void lock(String lockKey, TimeUnit unit, int timeout) {
+
     locker.lock(lockKey, unit, timeout);
   }
 
@@ -78,6 +83,7 @@ public class RedisLockUtil {
    * @return
    */
   public static boolean tryLock(String lockKey) {
+
     return locker.tryLock(lockKey);
   }
 
@@ -93,6 +99,7 @@ public class RedisLockUtil {
    */
   public static boolean tryLock(String lockKey, long waitTime, long leaseTime,
                                 TimeUnit unit) throws InterruptedException {
+
     return locker.tryLock(lockKey, waitTime, leaseTime, unit);
   }
 
@@ -103,6 +110,7 @@ public class RedisLockUtil {
    * @return
    */
   public static boolean isLocked(String lockKey) {
+
     return locker.isLocked(lockKey);
   }
 

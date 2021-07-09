@@ -1,16 +1,12 @@
 package cn.demo.order.controller;
 
-import javax.annotation.Resource;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import cn.demo.common.model.pojo.ResponseResult;
-import cn.demo.common.util.RedisUtil;
 import cn.demo.order.feign.api.request.OrderReq;
 import cn.demo.order.server.OrderBaseService;
 import lombok.extern.slf4j.Slf4j;
@@ -30,9 +26,6 @@ public class OrderController {
   @Autowired
   private OrderBaseService orderBaseService;
 
-  @Resource
-  private RedisUtil redisUtil;
-
   /**
    * 创建订单
    */
@@ -46,15 +39,6 @@ public class OrderController {
       return ResponseResult.fail("创建订单失败");
     }
     return ResponseResult.success("");
-  }
-
-
-  @GetMapping("/redis")
-  public ResponseResult redisTest() {
-
-    redisUtil.set("hello", "hello", 60);
-    Object result = redisUtil.getStr("hello");
-    return ResponseResult.success(result);
   }
 
 }

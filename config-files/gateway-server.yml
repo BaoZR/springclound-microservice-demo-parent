@@ -1,0 +1,41 @@
+random: thOt2P7V8afZ9uiEC04spxFQLtHVcPCErA
+server:
+  port: 20010
+  servlet:
+    context-path: /api
+spring:
+  cloud:
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowed-origins: "*"
+            allowed-methods: "*"
+            allowed-headers: "*"
+            allow-credentials: true
+      routes:
+        - id: order
+          uri: lb://demo-order
+          predicates:
+            - Path=/api/order/**
+          filters:
+            - StripPrefix=1
+        - id: storage
+          uri: lb://demo-storage
+          predicates:
+            - Path=/api/storage/**
+          filters:
+            - StripPrefix=1
+
+customize:
+  whites:
+    - /api/order/
+    - /api/storage/
+    - .html
+    - .js
+    - .css
+    - /api-docs
+    - /swagger-resources
+    - /webjars/springfox-swagger-ui/

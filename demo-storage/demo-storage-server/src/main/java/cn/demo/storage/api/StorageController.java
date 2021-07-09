@@ -1,12 +1,12 @@
 package cn.demo.storage.api;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import cn.demo.common.model.pojo.ResponseResult;
 import cn.demo.storage.feigapi.api.StorageApi;
-import cn.demo.storage.feigapi.dto.StorageSelectDTO;
-import cn.demo.storage.feigapi.entity.StorageEntity;
 import cn.demo.storage.service.StorageService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,39 +18,18 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @RestController
+@RequestMapping("/feignApi/storage")
 public class StorageController implements StorageApi {
 
-  @Autowired
+  @Resource
   private StorageService storageService;
 
   @Override
-  public ResponseResult findById(StorageSelectDTO data) {
+  public ResponseResult deduct(Integer productId, Integer count) {
 
-    return null;
-  }
-
-  @Override
-  public ResponseResult insert(StorageEntity data) {
-
-    return null;
-  }
-
-  @Override
-  public ResponseResult deleteById(Integer id) {
-
-    return null;
-  }
-
-  @Override
-  public ResponseResult update(StorageEntity data) {
-
-    return null;
-  }
-
-  @Override
-  public ResponseResult findPage(StorageSelectDTO data) {
-
-    return null;
+    storageService.deduct(productId, count);
+    log.info("减库存成功");
+    return ResponseResult.success();
   }
 
 }

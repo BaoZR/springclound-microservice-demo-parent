@@ -106,11 +106,6 @@ pagehelper:
   supportMethodsArguments: true
   params: count=countSql
 
-swagger:
-  enabled: false
-  base-path: /**
-  base-package: 'cn.demo.micro.market.frontend'
-  title: '行情API'
-  description: '基于Swagger构建的SpringBoot RESTApi 文档'
-  version: '1.0.0'
-  swagger.contact.email: 'demo@demo.cn'
+feign-api:
+  storage:
+    url: ''

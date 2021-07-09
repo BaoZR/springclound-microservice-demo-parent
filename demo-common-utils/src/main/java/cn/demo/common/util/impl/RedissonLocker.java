@@ -25,30 +25,35 @@ public class RedissonLocker implements Locker {
 
   @Override
   public void lock(String lockKey) {
+
     RLock lock = redissonClient.getLock(lockKey);
     lock.lock();
   }
 
   @Override
   public void unlock(String lockKey) {
+
     RLock lock = redissonClient.getLock(lockKey);
     lock.unlock();
   }
 
   @Override
   public void lock(String lockKey, int leaseTime) {
+
     RLock lock = redissonClient.getLock(lockKey);
     lock.lock(leaseTime, TimeUnit.SECONDS);
   }
 
   @Override
   public void lock(String lockKey, TimeUnit unit, int timeout) {
+
     RLock lock = redissonClient.getLock(lockKey);
     lock.lock(timeout, unit);
   }
 
   @Override
   public boolean tryLock(String lockKey) {
+
     RLock lock = redissonClient.getLock(lockKey);
     return lock.tryLock();
   }
@@ -56,13 +61,16 @@ public class RedissonLocker implements Locker {
   @Override
   public boolean tryLock(String lockKey, long waitTime, long leaseTime,
                          TimeUnit unit) throws InterruptedException {
+
     RLock lock = redissonClient.getLock(lockKey);
     return lock.tryLock(waitTime, leaseTime, unit);
   }
 
   @Override
   public boolean isLocked(String lockKey) {
+
     RLock lock = redissonClient.getLock(lockKey);
     return lock.isLocked();
   }
+
 }

@@ -45,6 +45,7 @@ public class JsonUtil {
    * @return
    */
   public static JSONObject changeJsonObj(JSONObject jsonObj, Map<String, String> keyMap) {
+
     JSONObject resJson = new JSONObject();
     Set<String> keySet = jsonObj.keySet();
     for (String key : keySet) {
@@ -71,6 +72,7 @@ public class JsonUtil {
    * @return
    */
   public static JSONArray changeJsonArr(JSONArray jsonArr, Map<String, String> keyMap) {
+
     JSONArray resJson = new JSONArray();
     for (int i = 0; i < jsonArr.size(); i++) {
       JSONObject jsonObj = jsonArr.getJSONObject(i);
@@ -80,6 +82,7 @@ public class JsonUtil {
   }
 
   public static synchronized ObjectMapper getMapperInstance(boolean createNew) {
+
     if (createNew) {
       return new ObjectMapper();
     } else if (mapper == null) {
@@ -94,6 +97,7 @@ public class JsonUtil {
   }
 
   public static <T> T json2Object(String json, Class<T> clazz) {
+
     if (StringUtils.isBlank(json)) {
       return null;
     }
@@ -108,6 +112,7 @@ public class JsonUtil {
   }
 
   public static <T> T json2ObjectWithCaseInSensitive(String json, Class<T> clazz) {
+
     if (StringUtils.isBlank(json)) {
       return null;
     }
@@ -127,6 +132,7 @@ public class JsonUtil {
 
   @SuppressWarnings("unchecked")
   public static Map<String, Object> json2Map(String json) {
+
     if (StringUtils.isBlank(json)) {
       return null;
     }
@@ -142,6 +148,7 @@ public class JsonUtil {
 
   @SuppressWarnings("unchecked")
   public static Map<String, Object> json2MapAllowSingleQuotes(String json) {
+
     if (StringUtils.isBlank(json)) {
       return null;
     }
@@ -157,6 +164,7 @@ public class JsonUtil {
   }
 
   public static Map<String, Object> json2MapWithException(String json) throws IOException {
+
     if (StringUtils.isBlank(json)) {
       return null;
     }
@@ -166,6 +174,7 @@ public class JsonUtil {
   }
 
   public static String object2Json(Object param) {
+
     try {
       ObjectMapper objectMapper = getMapperInstance(false);
       objectMapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
@@ -178,6 +187,7 @@ public class JsonUtil {
   }
 
   public static Map<String, Object> object2Map(Object param) {
+
     try {
       ObjectMapper objectMapper = getMapperInstance(false);
       objectMapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
@@ -190,6 +200,7 @@ public class JsonUtil {
   }
 
   public static SortedMap<String, Object> object2TreeMap(Object param) {
+
     try {
       ObjectMapper objectMapper = getMapperInstance(false);
       objectMapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
@@ -202,6 +213,7 @@ public class JsonUtil {
   }
 
   public static <T> T map2Object(Object map, Class<T> clazz) {
+
     String json = object2Json(map);
     if (StringUtils.isBlank(json)) {
       return null;
@@ -210,6 +222,7 @@ public class JsonUtil {
   }
 
   public static String containNullObject2Json(Object param) {
+
     try {
       ObjectMapper objectMapper = getMapperInstance(false);
       objectMapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
@@ -222,6 +235,7 @@ public class JsonUtil {
   }
 
   public static List jsonToList(String json, Class clazz) {
+
     try {
       ObjectMapper objectMapper = getMapperInstance(false);
       objectMapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
@@ -238,6 +252,7 @@ public class JsonUtil {
    * 获取指定节点下的字符串
    */
   public static String getSubString(String json, String path) {
+
     if (StringUtils.isBlank(json) || StringUtils.isBlank(path)) {
       return null;
     }
@@ -252,4 +267,5 @@ public class JsonUtil {
     }
     return result;
   }
+
 }

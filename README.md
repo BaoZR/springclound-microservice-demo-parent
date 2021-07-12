@@ -95,8 +95,7 @@
 > 贴一张网上的比较经典的微服务架构图😄
 
 
-
-<img src="https://gitee.com/mixbe/blog-image/raw/master/img/WX20210712-170410@2x.png" style="zoom:150%;" />
+![](https://gitee.com/mixbe/blog-image/raw/master/img/WX20210712-170410@2x.png)
 
 
 
@@ -148,8 +147,7 @@
 * `Group`： 用的默认`DEFAULT_GROUP`
 * `配置格式`： `YAML`
 
-<img src="https://gitee.com/mixbe/blog-image/raw/master/img/WX20210712-171348@2x.png" style="zoom:40%;" />
-
+![](https://gitee.com/mixbe/blog-image/raw/master/img/WX20210712-171348@2x.png)
 ![](https://gitee.com/mixbe/blog-image/raw/master/img/WX20210709-171136@2x.png)
 
 

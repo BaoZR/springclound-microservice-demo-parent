@@ -1,3 +1,9 @@
+server:
+  port: 40001
+  servlet:
+    session:
+      timeout: 2000s
+
 spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss

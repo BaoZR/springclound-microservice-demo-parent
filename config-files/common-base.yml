@@ -1,4 +1,3 @@
-random: thOt2P7V8Z9uiEC04spxFQLtHVcPCErA
 spring:
   messages:
     basename: file:/application/lottery/i18n/messages

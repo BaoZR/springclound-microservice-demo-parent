@@ -1,3 +1,9 @@
+server:
+  port: 40002
+  servlet:
+    session:
+      timeout: 2000s
+      
 spring:
   main:
     #支持名称相同的bean被覆盖

@@ -22,6 +22,8 @@
 ## 2. 新建数据库表`seata`
 
 > 测试发现目前`seata server`不支持8.0的数据库，只能使用mysql-5.x ，测试使用的是版本是5.7
+>
+> 不过在1.3.0 版本下，支持redis配置，配置变得更简单了😄
 
 
 
@@ -35,19 +37,18 @@ create database seata;
 # at模式下执行的sql
 CREATE TABLE IF NOT EXISTS `undo_log`
 (
-    `id`            BIGINT(20)   NOT NULL AUTO_INCREMENT COMMENT 'increment id',
     `branch_id`     BIGINT(20)   NOT NULL COMMENT 'branch transaction id',
     `xid`           VARCHAR(100) NOT NULL COMMENT 'global transaction id',
     `context`       VARCHAR(128) NOT NULL COMMENT 'undo_log context,such as serialization',
     `rollback_info` LONGBLOB     NOT NULL COMMENT 'rollback info',
     `log_status`    INT(11)      NOT NULL COMMENT '0:normal status,1:defense status',
-    `log_created`   DATETIME     NOT NULL COMMENT 'create datetime',
-    `log_modified`  DATETIME     NOT NULL COMMENT 'modify datetime',
-    PRIMARY KEY (`id`),
+    `log_created`   DATETIME(6)  NOT NULL COMMENT 'create datetime',
+    `log_modified`  DATETIME(6)  NOT NULL COMMENT 'modify datetime',
     UNIQUE KEY `ux_undo_log` (`xid`, `branch_id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
   DEFAULT CHARSET = utf8 COMMENT ='AT transaction mode undo table';
+
   
 
 
@@ -215,5 +216,13 @@ docker-compose up -d
 进入到`nacos`服务注册中心检查是否成功注册，如果注册成功，那么恭喜💐，基础服务搭建好了
 
 ![](https://gitee.com/mixbe/blog-image/raw/master/img/WX20210705-112856@2x.png)
+
+
+## 5. 参考
+1. [AT、TCC、SAGA三种事务模式的介绍](http://seata.io/zh-cn/docs/overview/what-is-seata.html)
+2. [部署脚本](https://github.com/seata/seata/tree/develop/script)
+3. [版本升级指南(需要阅读下)](http://seata.io/zh-cn/docs/ops/upgrade.html)
+
+
 
 

@@ -18,45 +18,15 @@ git checkout -b 1.2.1 origin/1.2.1
 
 ```
 
-2. 修改文件
+2. 添加环境变量
+> 根据安装的版本，指定版本号, 详细看下`example/standalone-derby.yaml`文件，就知道为什么要这样做了；
 
-* 打开文件: `vim example/standalone-derby.yaml`
-* 修改文件: `nacos-server:latest`为`nacos-server:1.2.1`
-
-更改后的内容：
 ```
-version: "2"
-services:
-  nacos:
-    image: nacos/nacos-server:1.2.1
-    container_name: nacos-standalone
-    environment:
-    - PREFER_HOST_MODE=hostname
-    - MODE=standalone
-    volumes:
-    - ./standalone-logs/:/home/nacos/logs
-    - ./init.d/custom.properties:/home/nacos/init.d/custom.properties
-    ports:
-    - "8848:8848"
-  prometheus:
-    container_name: prometheus
-    image: prom/prometheus:latest
-    volumes:
-      - ./prometheus/prometheus-standalone.yaml:/etc/prometheus/prometheus.yml
-    ports:
-      - "9090:9090"
-    depends_on:
-      - nacos
-    restart: on-failure
-  grafana:
-    container_name: grafana
-    image: grafana/grafana:latest
-    ports:
-      - 3000:3000
-    restart: on-failure
+export NACOS_VERSION=1.4.2
 ```
 
-3. 单机模式 Derby 启动
+3. 单机模式Derby启动
+
 ```
 docker-compose -f example/standalone-derby.yaml up -d
 ```

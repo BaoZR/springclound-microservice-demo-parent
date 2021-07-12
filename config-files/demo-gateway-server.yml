@@ -1,6 +1,5 @@
-random: thOt2P7V8afZ9uiEC04spxFQLtHVcPCErA
 server:
-  port: 20010
+  port: 40000
   servlet:
     context-path: /api
 spring:

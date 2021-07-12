@@ -1,7 +1,7 @@
 - [0、 目的](#0----)
 - [1、 版本](#1----)
 - [2、常用技术组件](#2-------)
-- [3、 架构图](#3-----) 
+- [3、 架构图](#3-----)
 - [4、基础服务搭建](#4-------)
     * [4.1、 mysql-5.7搭建](#41--mysql-57--)
     * [4.2、mysql-8.0.18搭建](#42-mysql-8018--)
@@ -175,11 +175,11 @@ curl -d '{"userId":1,"payMoney":0.2,"productId":1,"count":2}' -H "Content-Type: 
 
 
 # 8、参考
-《阿里巴巴开发手册》(嵩山版)
-[Github seata](https://github.com/seata/seata)
-[seata-samples](https://github.com/seata/seata-samples)
-[setat](https://nacos.io/zh-cn/)
-[Nacos config](https://github.com/alibaba/spring-cloud-alibaba/wiki/Nacos-config)
-[版本说明](https://github.com/alibaba/spring-cloud-alibaba/wiki/%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E)
 
+1. 《阿里巴巴开发手册》
+2. [Github seata](https://github.com/seata/seata)
+3. [seata-samples](https://github.com/seata/seata-samples)
+4. [setat](https://nacos.io/zh-cn/)
+5. [Nacos config](https://github.com/alibaba/spring-cloud-alibaba/wiki/Nacos-config)
+6. [版本说明](https://github.com/alibaba/spring-cloud-alibaba/wiki/%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E)
 

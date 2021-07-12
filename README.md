@@ -153,7 +153,15 @@
 
 
 
+1. 启动`demo-storage`
+2. 启动`demo-order`
+3. 启动`demo-gateway`
 
+
+
+启动成功，观察`nacos`服务注册列表
+
+![WX20210712-180115@2x.png](https://i.loli.net/2021/07/12/GgjJH7mBT5CWuFS.png)
 
 
 

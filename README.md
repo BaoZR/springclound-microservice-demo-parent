@@ -4,9 +4,8 @@
 - [3、 架构图](#3-----)
 - [4、基础服务搭建](#4-------)
     * [4.1、 mysql-5.7搭建](#41--mysql-57--)
-    * [4.2、mysql-8.0.18搭建](#42-mysql-8018--)
-    * [4.3 、nacos服务搭建](#43--nacos----)
-    * [4.4、seata-server 服务搭建](#44-seata-server-----)
+    * [4.2 、nacos服务搭建](#43--nacos----)
+    * [4.3、seata-server 服务搭建](#44-seata-server-----)
 - [5、模块介绍](#5-----)
 - [6、项目启动](#6-----)
 - [7、项目测试](#7-----)
@@ -110,15 +109,12 @@
 
 [mysql-5.7搭建步骤](./docker-application/mysql-5.7-docker/README.md)
 
-## 4.2、mysql-8.0.18搭建
 
-[mysql-8.0.18搭建步骤](./docker-application/mysql-8.0-docker/README.md)
-
-## 4.3 、nacos服务搭建
+## 4.1 、nacos服务搭建
 
 [nacos服务搭建步骤](./docker-application/nacos/README.md)
 
-## 4.4、seata-server 服务搭建
+## 4.2、seata-server 服务搭建
 
 > seata版本为1.3.0,严格按照官网推荐的版本部署
 
@@ -134,7 +130,7 @@
 | `demo-gateway`       | 项目的网关                      | 4000 |
 | `demo-order`         | 订单服务                        | 4001 |
 | `demo-storage`       | 仓库服务                        | 4002 |
-| `i18n`               | 国家化(暂时没有用到)            |      |
+| `i18n`               | 国际化(暂时没有用到)            |      |
 | `config-files`       | 项目配置文件(上传到nacos的配置) |      |
 | `docker-application` | 启动docker服务的文件            |      |
 
